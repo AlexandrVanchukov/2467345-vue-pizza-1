@@ -170,6 +170,7 @@ function getDoughStyle(dough_name) {
 </script>
 
 <style lang="scss" scoped>
+//Все стили были добавлены на этапе module2-task2 
 @import "@/assets/scss/app.scss";
 // radio
 .radio {
