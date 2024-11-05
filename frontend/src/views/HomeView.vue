@@ -4,76 +4,86 @@
       <div class="content__wrapper">
         <h1 class="title title--big">Конструктор пиццы</h1>
 
-        <ContentDough :dough='dough' @setDough='setDough' />
+        <ContentDough :dough="dough" @setDough="setDough" />
 
-        <ContentDiameter :diameter='diameter' @setDiameter='setDiameter' />
+        <ContentDiameter :diameter="diameter" @setDiameter="setDiameter" />
 
-        <ContentIngredients :sauce='sauce' :setSauce='setSauce' :fillings='fillings' @setFillings='setFillings' @drop='moveFilling'/>
+        <ContentIngredients
+          :sauce="sauce"
+          :set-sauce="setSauce"
+          :fillings="fillings"
+          @setFillings="setFillings"
+          @drop="moveFilling"
+        />
 
-        <ContentPizza :pizzaState='pizzaState' :dough='dough' :sauce='sauce' :fillings='fillings' :moveFilling='moveFilling'/>
+        <ContentPizza
+          :pizza-state="pizzaState"
+          :dough="dough"
+          :sauce="sauce"
+          :fillings="fillings"
+          :move-filling="moveFilling"
+        />
       </div>
     </form>
   </main>
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
-import ContentDough from '../modules/constructor/ContentDough.vue';
-import ContentDiameter from '../modules/constructor/ContentDiameter.vue';
-import ContentIngredients from '../modules/constructor/ContentIngredients.vue';
-import ContentPizza from '../modules/constructor/ContentPizza.vue';
+import { reactive, ref } from "vue";
+import ContentDough from "../modules/constructor/ContentDough.vue";
+import ContentDiameter from "../modules/constructor/ContentDiameter.vue";
+import ContentIngredients from "../modules/constructor/ContentIngredients.vue";
+import ContentPizza from "../modules/constructor/ContentPizza.vue";
 
-const dough = ref('small');
+const dough = ref("small");
 const setDough = (value) => {
-    dough.value = value
-  }
+  dough.value = value;
+};
 
-const diameter = ref('small');
+const diameter = ref("small");
 const setDiameter = (value) => {
-    diameter.value = value
-  }
+  diameter.value = value;
+};
 
-const sauce = ref('tomato');
+const sauce = ref("tomato");
 const setSauce = (value) => {
-    sauce.value = value
-  }
+  sauce.value = value;
+};
 
 const fillings = ref({
-    bacon: 1,
-    ham: 1,
-    cheddar: 1,
-  });
+  bacon: 1,
+  ham: 1,
+  cheddar: 1,
+});
 const setFillings = (value) => {
-    fillings.value = value
-  }
+  fillings.value = value;
+};
 
-  function moveFilling(fillingName){
-    console.log('moveFilling');
-    if(fillings.hasOwnProperty(fillingName)){
-        const fillingNewValue = fillings[fillingName] + 1;
-        fillings.value = {...fillings.value, [fillingName]: fillingNewValue};
-    }
-    else{
-        fillings.value = {...fillings.value, [fillingName]: 1};
-    }
+function moveFilling(fillingName) {
+  console.log("moveFilling");
+  if (fillings.value.hasOwnProperty(fillingName)) {
+    const fillingNewValue = fillings[fillingName] + 1;
+    fillings.value = { ...fillings.value, [fillingName]: fillingNewValue };
+  } else {
+    fillings.value = { ...fillings.value, [fillingName]: 1 };
+  }
 }
 
 const pizzaState = reactive({
-  name: '',
-  dough: 'small',
-  diameter: 'big',
-  sauce: 'tomato',
+  name: "",
+  dough: "small",
+  diameter: "big",
+  sauce: "tomato",
   fillings: {
     bacon: 1,
     ham: 1,
     cheddar: 1,
-  }
+  },
 });
-
 </script>
 
 <style lang="scss" scoped>
-//Все стили были добавлены на этапе module2-task2 
+//Все стили были добавлены на этапе module2-task2
 @import "@/assets/scss/app.scss";
 // input
 .input {
@@ -165,5 +175,4 @@ const pizzaState = reactive({
   padding-left: 18px;
   border-top: 1px solid rgba($green-500, 0.1);
 }
-
 </style>
