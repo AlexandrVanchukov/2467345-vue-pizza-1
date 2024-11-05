@@ -1,12 +1,16 @@
 <template>
   <div class="main-layout">
-    <app-layout-header />
-    <slot />
+    <app-header />
+    <main class="layout">
+      <app-sidebar />
+      <slot />
+    </main>
   </div>
 </template>
 
 <script setup>
-import AppLayoutHeader from "./AppLayoutHeader.vue";
+import AppHeader from "./AppHeader.vue";
+import AppSidebar from "./AppSidebar.vue";
 </script>
 
 <style lang="scss" scoped>

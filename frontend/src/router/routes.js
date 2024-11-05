@@ -3,21 +3,25 @@ export default [
     path: "/",
     name: "MainView",
     component: () => import("../views/MainView.vue"),
+    meta: { layout: "AppLayoutOnlyHeader" },
   },
   {
     path: "/",
     name: "IndexView",
     component: () => import("../views/IndexView.vue"),
+    meta: { layout: "AppLayoutEmpty" },
   },
   {
     path: "/welcome",
     name: "WelcomeView",
     component: () => import("../views/WelcomeView.vue"),
+    meta: { layout: "AppLayoutEmpty" },
   },
   {
     path: "/cart",
     name: "CartView",
     component: () => import("../views/CartView.vue"),
+    meta: { layout: "AppLayoutOnlyHeader" },
   },
   {
     path: "/orders",
@@ -28,6 +32,7 @@ export default [
     path: "/sign-in",
     name: "SignInView",
     component: () => import("../views/SignInView.vue"),
+    meta: { layout: "AppLayoutEmpty" },
   },
   {
     path: "/user-data",

@@ -1,14 +1,16 @@
 <template>
-  <div class="main__wrapper">
-    <div class="main__header">
-      <img src="img/logo.svg" width="300" height="47" alt="V!U!E! Pizza" />
+  <body class="main">
+    <div class="main__wrapper">
+      <div class="main__header">
+        <img src="img/logo.svg" width="300" height="47" alt="V!U!E! Pizza" />
+      </div>
+      <h1>Добро пожаловать!</h1>
+      <p>
+        Это проект V!U!E! Pizza для обучения на профессиональном онлайн‑курсе<br />
+        <b>«Vue.js для опытных разработчиков».</b>
+      </p>
     </div>
-    <h1>Добро пожаловать!</h1>
-    <p>
-      Это проект V!U!E! Pizza для обучения на профессиональном онлайн‑курсе<br />
-      <b>«Vue.js для опытных разработчиков».</b>
-    </p>
-  </div>
+  </body>
 </template>
 
 <script setup></script>
