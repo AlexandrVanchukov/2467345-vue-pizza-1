@@ -1,28 +1,28 @@
 <template>
-    <div class="content__diameter">
-          <div class="sheet">
-            <h2 class="title title--small sheet__title">Выберите размер</h2>
+  <div class="content__diameter">
+    <div class="sheet">
+      <h2 class="title title--small sheet__title">Выберите размер</h2>
 
-            <div class="sheet__content diameter">
-              <template v-for="size in sizes" :key="size.id">
-                <label
-                  class="diameter__input"
-                  :class="`diameter__input--${getDiameterValue(size.name)}`"
-                  @click="emit('setDiameter', getDiameterValue(size.name))"
-                >
-                  <input
-                    type="radio"
-                    name="diameter"
-                    :value="getDiameterValue(size.name)"
-                    class="visually-hidden"
-                    :checked='props.diameter === getDiameterValue(size.name)'
-                  />
-                  <span>{{ size.name }}</span>
-                </label>
-              </template>
-            </div>
-          </div>
-        </div>
+      <div class="sheet__content diameter">
+        <template v-for="size in sizes" :key="size.id">
+          <label
+            class="diameter__input"
+            :class="`diameter__input--${getDiameterValue(size.name)}`"
+            @click="emit('setDiameter', getDiameterValue(size.name))"
+          >
+            <input
+              type="radio"
+              name="diameter"
+              :value="getDiameterValue(size.name)"
+              class="visually-hidden"
+              :checked="props.diameter === getDiameterValue(size.name)"
+            />
+            <span>{{ size.name }}</span>
+          </label>
+        </template>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -32,9 +32,9 @@ const props = defineProps({
   diameter: {
     type: String,
     required: true,
-    default: 'small',
-  }
-})
+    default: "small",
+  },
+});
 
 const emit = defineEmits(["setDiameter"]);
 
@@ -53,53 +53,6 @@ function getDiameterValue(diameter) {
 
 <style lang="scss" scoped>
 @import "@/assets/scss/app.scss";
-// title
-.title {
-  box-sizing: border-box;
-  width: 100%;
-  margin: 0;
-  color: $black;
-  &--big {
-    @include b-s36-h42;
-  }
-  &--small {
-    @include b-s18-h21;
-  }
-}
-// visually-hidden
-.visually-hidden {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  white-space: nowrap;
-  border: 0;
-  clip-path: inset(100%);
-}
-// sheet
-.sheet {
-  padding-top: 15px;
-  border-radius: 8px;
-  background-color: $white;
-  box-shadow: $shadow-light;
-}
-.sheet__title {
-  padding-right: 18px;
-  padding-left: 18px;
-}
-.sheet__content {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-top: 8px;
-  padding-top: 18px;
-  padding-right: 18px;
-  padding-left: 18px;
-  border-top: 1px solid rgba($green-500, 0.1);
-}
 // diameter
 .diameter__input {
   margin-right: 8.7%;
