@@ -1,100 +1,68 @@
 <template>
-    <div class="content__pizza">
-        <label class="input">
-            <span class="visually-hidden">Название пиццы</span>
-            <input
-                type="text"
-                name="pizza_name"
-                placeholder="Введите название пиццы"
-            />
-        </label>
-        <app-drop @drop="moveFilling">
-            <div class="content__constructor">
-                <div class="pizza" :class='`pizza--foundation--${props.dough}-${props.sauce}`'>
-                    <div class="pizza__wrapper">
-                    <template v-for='filling in Object.getOwnPropertyNames(props.fillings)'>
-                        <div class="pizza__filling" :class='`pizza__filling--${filling}`'></div>
-                    </template>
-                    </div>
-                </div>
-            </div>
-        </app-drop>
-        
-
-        <div class="content__result">
-            <p>Итого: 0 ₽</p>
-            <button type="button" class="button" disabled>Готовьте!</button>
+  <div class="content__pizza">
+    <label class="input">
+      <span class="visually-hidden">Название пиццы</span>
+      <input
+        type="text"
+        name="pizza_name"
+        placeholder="Введите название пиццы"
+      />
+    </label>
+    <app-drop @drop="moveFilling">
+      <div class="content__constructor">
+        <div
+          class="pizza"
+          :class="`pizza--foundation--${props.dough}-${props.sauce}`"
+        >
+          <div class="pizza__wrapper">
+            <template
+              v-for="filling in Object.getOwnPropertyNames(props.fillings)"
+              :key="filling.id"
+            >
+              <div
+                class="pizza__filling"
+                :class="`pizza__filling--${
+                  props.fillings[filling] !== 0 ? filling : ''
+                }`"
+              ></div>
+            </template>
+          </div>
         </div>
+      </div>
+    </app-drop>
+
+    <div class="content__result">
+      <p>Итого: 0 ₽</p>
+      <button type="button" class="button" disabled>Готовьте!</button>
     </div>
+  </div>
 </template>
 
 <script setup>
-import AppDrop from '../../common/components/AppDrop.vue';
+import AppDrop from "../../common/components/AppDrop.vue";
 
 const props = defineProps({
-  dough:{
+  dough: {
     type: String,
     required: true,
   },
-  sauce:{
+  sauce: {
     type: String,
     required: true,
   },
-  fillings:{
+  fillings: {
     type: Object,
     required: true,
   },
-  moveFilling:{
+  moveFilling: {
     type: Function,
     required: true,
-  }
-})
-
+  },
+});
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/scss/app.scss";
-// input
-.input {
-  display: block;
-  span {
-    @include r-s14-h16;
-    display: block;
-    margin-bottom: 4px;
-  }
-  input {
-    @include r-s16-h19;
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    margin: 0;
-    padding: 8px 16px;
-    transition: 0.3s;
-    color: $black;
-    border: 1px solid $purple-400;
-    border-radius: 8px;
-    outline: none;
-    background-color: $white;
-    font-family: inherit;
-    &:focus {
-      border-color: $green-500;
-    }
-  }
-  &:hover {
-    input {
-      border-color: $black;
-    }
-  }
-  &--big-label {
-    display: flex;
-    align-items: center;
-    span {
-      @include b-s16-h19;
-      margin-right: 16px;
-      white-space: nowrap;
-    }
-  }
-}
 .content__pizza {
   width: 373px;
   margin-top: 15px;
@@ -120,19 +88,6 @@ const props = defineProps({
     margin-left: 12px;
     padding: 16px 45px;
   }
-}
-// visually-hidden
-.visually-hidden {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  white-space: nowrap;
-  border: 0;
-  clip-path: inset(100%);
 }
 // pizza
 .pizza {

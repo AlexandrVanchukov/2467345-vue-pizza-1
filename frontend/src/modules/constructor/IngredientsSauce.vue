@@ -1,21 +1,21 @@
 <template>
-    <div class="ingredients__sauce">
+  <div class="ingredients__sauce">
     <p>Основной соус:</p>
     <template v-for="sauce in sauces" :key="sauce.id">
-        <label 
-            class="radio ingredients__input"
-            @click="emit('setSauce', sauce.name_eng)"
-        >
-            <input 
-                type="radio" 
-                name="sauce" 
-                :value="sauce.name_eng"
-                :checked='props.sauce === sauce.name_eng'
-             />
-            <span>{{ sauce.name }}</span>
-        </label>
+      <label
+        class="radio ingredients__input"
+        @click="emit('setSauce', sauce.name_eng)"
+      >
+        <input
+          type="radio"
+          name="sauce"
+          :value="sauce.name_eng"
+          :checked="props.sauce === sauce.name_eng"
+        />
+        <span>{{ sauce.name }}</span>
+      </label>
     </template>
-    </div>
+  </div>
 </template>
 
 <script setup>
@@ -25,9 +25,9 @@ const props = defineProps({
   sauce: {
     type: String,
     required: true,
-    default: 'tomato',
+    default: "tomato",
   },
-})
+});
 
 const emit = defineEmits(["setSauce"]);
 </script>
@@ -82,53 +82,6 @@ const emit = defineEmits(["setSauce"]);
       }
     }
   }
-}
-// title
-.title {
-  box-sizing: border-box;
-  width: 100%;
-  margin: 0;
-  color: $black;
-  &--big {
-    @include b-s36-h42;
-  }
-  &--small {
-    @include b-s18-h21;
-  }
-}
-// visually-hidden
-.visually-hidden {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  white-space: nowrap;
-  border: 0;
-  clip-path: inset(100%);
-}
-// sheet
-.sheet {
-  padding-top: 15px;
-  border-radius: 8px;
-  background-color: $white;
-  box-shadow: $shadow-light;
-}
-.sheet__title {
-  padding-right: 18px;
-  padding-left: 18px;
-}
-.sheet__content {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-top: 8px;
-  padding-top: 18px;
-  padding-right: 18px;
-  padding-left: 18px;
-  border-top: 1px solid rgba($green-500, 0.1);
 }
 //ingredients
 .ingredients__sauce {
