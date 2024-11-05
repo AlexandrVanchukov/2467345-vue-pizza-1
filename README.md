@@ -188,3 +188,4 @@ npm start
 Вёрстку можно посмотреть в директории `template/src`.
 
 module3-task2 был выполнен в ветке module3-task1
+module3-task3 был выполнен в ветке module3-task1
