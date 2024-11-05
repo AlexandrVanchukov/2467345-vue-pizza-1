@@ -21,7 +21,9 @@
             >
               <div
                 class="pizza__filling"
-                :class="`pizza__filling--${filling}`"
+                :class="`pizza__filling--${
+                  props.fillings[filling] !== 0 ? filling : ''
+                }`"
               ></div>
             </template>
           </div>

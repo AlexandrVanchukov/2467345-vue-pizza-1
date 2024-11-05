@@ -54,19 +54,27 @@ const fillings = ref({
   bacon: 1,
   ham: 1,
   cheddar: 1,
+  mushrooms: 0,
+  salami: 0,
+  ananas: 0,
+  onion: 0,
+  chile: 0,
+  jalapeno: 0,
+  olives: 0,
+  tomatoes: 0,
+  salmon: 0,
+  mozzarella: 0,
+  parmesan: 0,
+  blue_cheese: 0,
 });
+
 const setFillings = (value) => {
   fillings.value = value;
 };
 
 function moveFilling(fillingName) {
   console.log("moveFilling");
-  if (fillings.value.hasOwnProperty(fillingName)) {
-    const fillingNewValue = fillings[fillingName] + 1;
-    fillings.value = { ...fillings.value, [fillingName]: fillingNewValue };
-  } else {
-    fillings.value = { ...fillings.value, [fillingName]: 1 };
-  }
+  fillings.value[fillingName]++;
 }
 
 const pizzaState = reactive({
@@ -78,6 +86,18 @@ const pizzaState = reactive({
     bacon: 1,
     ham: 1,
     cheddar: 1,
+    mushrooms: 0,
+    salami: 0,
+    ananas: 0,
+    onion: 0,
+    chile: 0,
+    jalapeno: 0,
+    olives: 0,
+    tomatoes: 0,
+    salmon: 0,
+    mozzarella: 0,
+    parmesan: 0,
+    blue_cheese: 0,
   },
 });
 </script>
