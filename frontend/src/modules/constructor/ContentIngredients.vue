@@ -14,7 +14,10 @@
               :key="ingredient.id"
               class="ingredients__item"
             >
-              <app-drag :transfer-data="translateName(ingredient.name)">
+              <app-drag
+                :transfer-data="translateName(ingredient.name)"
+                :is-dragable="isDragable(ingredient.name)"
+              >
                 <span class="filling" :class="getFillingStyle(ingredient.name)"
                   >{{ ingredient.name }}
                 </span>
@@ -86,6 +89,10 @@ const fillings = computed({
     emit("update:fillings", fillings);
   },
 });
+
+function isDragable(filling_name) {
+  return props.fillings[translateName(filling_name)] > 2 ? false : true;
+}
 
 function getFillingStyle(ingredient_name) {
   return `filling--${translateName(ingredient_name)}`;

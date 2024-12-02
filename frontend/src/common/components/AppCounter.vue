@@ -17,6 +17,7 @@
     <button
       type="button"
       class="counter__button counter__button--plus"
+      :disabled="isDisabledPlus()"
       @click="plusHandler()"
     >
       <span class="visually-hidden">Больше</span>
@@ -35,6 +36,10 @@ const emit = defineEmits(["update:modelValue"]);
 
 const isDisabledMinus = () => {
   return props.modelValue < 1;
+};
+
+const isDisabledPlus = () => {
+  return props.modelValue > 2;
 };
 
 function minusHandler() {
