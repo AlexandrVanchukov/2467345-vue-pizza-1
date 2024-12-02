@@ -35,7 +35,7 @@ import ContentDiameter from "../modules/constructor/ContentDiameter.vue";
 import ContentIngredients from "../modules/constructor/ContentIngredients.vue";
 import ContentPizza from "../modules/constructor/ContentPizza.vue";
 
-const dough = ref("small");
+const dough = ref("light");
 const setDough = (value) => {
   dough.value = value;
 };

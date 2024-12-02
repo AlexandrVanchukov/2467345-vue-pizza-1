@@ -12,7 +12,7 @@
       <div class="content__constructor">
         <div
           class="pizza"
-          :class="`pizza--foundation--${props.dough}-${props.sauce}`"
+          :class="`pizza--foundation--${doughtConverter()}-${props.sauce}`"
         >
           <div class="pizza__wrapper">
             <template
@@ -59,6 +59,10 @@ const props = defineProps({
     required: true,
   },
 });
+
+function doughtConverter(){
+  return props.dough === "light" ? "small" : "big";
+}
 </script>
 
 <style lang="scss" scoped>
