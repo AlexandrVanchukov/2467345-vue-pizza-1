@@ -14,14 +14,12 @@
               :key="ingredient.id"
               class="ingredients__item"
             >
-              <app-drag :transfer-data="ingredient.name_eng">
-                <span
-                  class="filling"
-                  :class="getFillingStyle(ingredient.name_eng)"
+              <app-drag :transfer-data="translateName(ingredient.name)">
+                <span class="filling" :class="getFillingStyle(ingredient.name)"
                   >{{ ingredient.name }}
                 </span>
               </app-drag>
-              <AppCounter v-model="fillings[ingredient.name_eng]" />
+              <AppCounter v-model="fillings[translateName(ingredient.name)]" />
               <!-- <div class="counter counter--orange ingredients__counter">
                 <button
                   type="button"
@@ -59,6 +57,9 @@ import ingredients from "../../mocks/ingredients.json";
 import IngredientsSauce from "./IngredientsSauce.vue";
 import AppDrag from "../../common/components/AppDrag.vue";
 import AppCounter from "@/common/components/AppCounter.vue";
+
+import translateName from "../../helpers/translate-name";
+
 const props = defineProps({
   sauce: {
     type: String,
@@ -85,20 +86,10 @@ const fillings = computed({
     emit("update:fillings", fillings);
   },
 });
-console.log(fillings);
-console.log(fillings.value);
-console.log(fillings.value["mushrooms"]);
-function getFillingStyle(ingredient_name) {
-  return `filling--${ingredient_name}`;
-}
 
-// function getFillingValue(fillingName) {
-//   if (props.fillings.hasOwnProperty(fillingName)) {
-//     return props.fillings[fillingName];
-//   } else {
-//     return "0";
-//   }
-// }
+function getFillingStyle(ingredient_name) {
+  return `filling--${translateName(ingredient_name)}`;
+}
 </script>
 
 <style lang="scss" scoped>

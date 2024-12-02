@@ -43,14 +43,6 @@ const emit = defineEmits(["setDough"]);
 function getDoughStyle(dough_name) {
   return `dough__input--${translateName(dough_name)}`;
 }
-
-function DoughStyleToValue(dough_name) {
-  if (dough_name === "light") {
-    return "light";
-  } else {
-    return "large";
-  }
-}
 </script>
 
 <style lang="scss" scoped>

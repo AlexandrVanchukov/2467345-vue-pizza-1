@@ -1,4 +1,10 @@
-import translations from "../common/data/doughSizes.js";
+import translations_dough from "../common/data/doughSizes.js";
+import translations_ingredients from "../common/data/ingredients.js";
+
+const translations = {
+  ...translations_dough,
+  ...translations_ingredients,
+};
 
 const translateName = (name) => {
   const translation = translations[name];
