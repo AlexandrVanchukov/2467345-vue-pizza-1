@@ -1,9 +1,11 @@
-import translations_dough from "../common/data/doughSizes.js";
-import translations_ingredients from "../common/data/ingredients.js";
+import dough from "../common/data/doughSizes.js";
+import ingredients from "../common/data/ingredients.js";
+import sauces from "../common/data/sauces.js";
 
 const translations = {
-  ...translations_dough,
-  ...translations_ingredients,
+  ...dough,
+  ...ingredients,
+  ...sauces,
 };
 
 const translateName = (name) => {
