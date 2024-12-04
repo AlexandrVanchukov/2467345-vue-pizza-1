@@ -301,6 +301,8 @@
 <style lang="scss" scoped>
 @import "@/assets/scss/app.scss";
 
+
+
 .container {
   width: 770px;
   margin: 0 auto;
