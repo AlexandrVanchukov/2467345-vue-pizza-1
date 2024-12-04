@@ -15,14 +15,16 @@
               class="ingredients__item"
             >
               <app-drag
-                :transfer-data="translateName(ingredient.name)"
+                :transfer-data="translateNameToEng(ingredient.name)"
                 :is-dragable="isDragable(ingredient.name)"
               >
                 <span class="filling" :class="getFillingStyle(ingredient.name)"
                   >{{ ingredient.name }}
                 </span>
               </app-drag>
-              <AppCounter v-model="fillings[translateName(ingredient.name)]" />
+              <AppCounter
+                v-model="fillings[translateNameToEng(ingredient.name)]"
+              />
               <!-- <div class="counter counter--orange ingredients__counter">
                 <button
                   type="button"
@@ -61,7 +63,7 @@ import IngredientsSauce from "./IngredientsSauce.vue";
 import AppDrag from "../../common/components/AppDrag.vue";
 import AppCounter from "@/common/components/AppCounter.vue";
 
-import translateName from "../../helpers/translate-name";
+import { translateNameToEng } from "../../helpers/translate-name";
 
 const props = defineProps({
   sauce: {
@@ -79,7 +81,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["setFillings", "drop", "update:fillings"]);
+const emit = defineEmits(["drop", "update:fillings"]);
 
 const fillings = computed({
   get() {
@@ -91,11 +93,11 @@ const fillings = computed({
 });
 
 function isDragable(filling_name) {
-  return props.fillings[translateName(filling_name)] > 2 ? false : true;
+  return props.fillings[translateNameToEng(filling_name)] > 2 ? false : true;
 }
 
 function getFillingStyle(ingredient_name) {
-  return `filling--${translateName(ingredient_name)}`;
+  return `filling--${translateNameToEng(ingredient_name)}`;
 }
 </script>
 

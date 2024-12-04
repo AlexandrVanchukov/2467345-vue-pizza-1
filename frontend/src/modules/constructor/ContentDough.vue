@@ -8,14 +8,14 @@
           <label
             class="dough__input"
             :class="getDoughStyle(dough.name)"
-            @click="emit('setDough', translateName(dough.name))"
+            @click="emit('setDough', translateNameToEng(dough.name))"
           >
             <input
               type="radio"
               name="dought"
-              :value="translateName(dough.name)"
+              :value="translateNameToEng(dough.name)"
               class="visually-hidden"
-              :checked="props.dough === translateName(dough.name)"
+              :checked="props.dough === translateNameToEng(dough.name)"
             />
             <b>{{ dough.name }}</b>
             <span>{{ dough.description }}</span>
@@ -28,7 +28,7 @@
 
 <script setup>
 import doughs from "../../mocks/dough.json";
-import translateName from "../../helpers/translate-name";
+import { translateNameToEng } from "../../helpers/translate-name";
 
 const props = defineProps({
   dough: {
@@ -36,12 +36,16 @@ const props = defineProps({
     required: true,
     default: "light",
   },
+  price: {
+    type: Number,
+    required: true,
+  },
 });
 
-const emit = defineEmits(["setDough"]);
+const emit = defineEmits(["setDough", "setPrice"]);
 
 function getDoughStyle(dough_name) {
-  return `dough__input--${translateName(dough_name)}`;
+  return `dough__input--${translateNameToEng(dough_name)}`;
 }
 </script>
 

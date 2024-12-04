@@ -14,7 +14,7 @@ import { DATA_TRANSFER_PAYLOAD, MOVE } from "../constants";
 
 const props = defineProps({
   transferData: {
-    type: Object,
+    type: String,
     required: true,
   },
   isDragable: {
