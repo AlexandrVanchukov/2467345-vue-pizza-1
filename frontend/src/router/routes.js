@@ -12,21 +12,10 @@ export default [
     meta: { layout: "AppLayoutEmpty" },
   },
   {
-    path: "/welcome",
-    name: "WelcomeView",
-    component: () => import("../views/WelcomeView.vue"),
-    meta: { layout: "AppLayoutEmpty" },
-  },
-  {
     path: "/cart",
     name: "CartView",
     component: () => import("../views/CartView.vue"),
     meta: { layout: "AppLayoutOnlyHeader" },
-  },
-  {
-    path: "/orders",
-    name: "OrdersView",
-    component: () => import("../views/OrdersView.vue"),
   },
   {
     path: "/sign-in",
@@ -35,8 +24,18 @@ export default [
     meta: { layout: "AppLayoutEmpty" },
   },
   {
-    path: "/user-data",
-    name: "UserDataView",
-    component: () => import("../views/UserDataView.vue"),
+    path: "/user",
+    children: [
+      {
+        path: "profile",
+        name: "UserDataView",
+        component: () => import("../views/UserDataView.vue"),
+      },
+      {
+        path: "orders",
+        name: "OrdersView",
+        component: () => import("../views/OrdersView.vue"),
+      },
+    ],
   },
 ];
