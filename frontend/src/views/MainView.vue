@@ -4,7 +4,12 @@
       <div class="content__wrapper">
         <h1 class="title title--big">Конструктор пиццы</h1>
 
-        <ContentDough :dough="dough" @set-dough="setDough" />
+        <ContentDough
+          :price="price"
+          :dough="dough"
+          @set-price="setPrice"
+          @set-dough="setDough"
+        />
 
         <ContentDiameter :diameter="diameter" @set-diameter="setDiameter" />
 
@@ -12,16 +17,16 @@
           :sauce="sauce"
           :set-sauce="setSauce"
           :fillings="fillings"
-          @set-fillings="setFillings"
+          :set-price="setPrice"
           @drop="moveFilling"
         />
 
         <ContentPizza
-          :pizza-state="pizzaState"
           :dough="dough"
           :sauce="sauce"
           :fillings="fillings"
           :move-filling="moveFilling"
+          :price="price"
         />
       </div>
     </form>
@@ -29,13 +34,19 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { ref, watch } from "vue";
 import ContentDough from "../modules/constructor/ContentDough.vue";
 import ContentDiameter from "../modules/constructor/ContentDiameter.vue";
 import ContentIngredients from "../modules/constructor/ContentIngredients.vue";
 import ContentPizza from "../modules/constructor/ContentPizza.vue";
+import { translateNameToRus } from "../helpers/translate-name";
 
-const dough = ref("small");
+import doughData from "../mocks/dough.json";
+import ingredientsData from "../mocks/ingredients.json";
+import saucesData from "../mocks/sauces.json";
+import sizesData from "../mocks/sizes.json";
+
+const dough = ref("light");
 const setDough = (value) => {
   dough.value = value;
 };
@@ -68,38 +79,48 @@ const fillings = ref({
   blue_cheese: 0,
 });
 
-const setFillings = (value) => {
-  fillings.value = value;
-};
+watch(
+  [fillings, dough, sauce, diameter],
+  () => {
+    setPrice();
+  },
+  { deep: true }
+);
 
 function moveFilling(fillingName) {
-  console.log("moveFilling");
   fillings.value[fillingName]++;
 }
 
-const pizzaState = reactive({
-  name: "",
-  dough: "small",
-  diameter: "big",
-  sauce: "tomato",
-  fillings: {
-    bacon: 1,
-    ham: 1,
-    cheddar: 1,
-    mushrooms: 0,
-    salami: 0,
-    ananas: 0,
-    onion: 0,
-    chile: 0,
-    jalapeno: 0,
-    olives: 0,
-    tomatoes: 0,
-    salmon: 0,
-    mozzarella: 0,
-    parmesan: 0,
-    blue_cheese: 0,
-  },
-});
+const price = ref(0);
+const setPrice = () => {
+  price.value = totalPrice();
+};
+
+function totalPrice() {
+  var result = 0;
+  result += doughData.find(
+    (d) => d.name == translateNameToRus(dough.value)
+  ).price;
+
+  for (const ingredient in fillings.value) {
+    if (fillings.value[ingredient] > 0) {
+      result +=
+        ingredientsData.find((i) => i.name == translateNameToRus(ingredient))
+          .price * fillings.value[ingredient];
+    }
+  }
+
+  result += saucesData.find(
+    (s) => s.name == translateNameToRus(sauce.value)
+  ).price;
+
+  result *= sizesData.find(
+    (s) => s.id == translateNameToRus(diameter.value)
+  ).multiplier;
+
+  return result;
+}
+setPrice();
 </script>
 
 <style lang="scss" scoped>

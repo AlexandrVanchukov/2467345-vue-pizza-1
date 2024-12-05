@@ -4,13 +4,13 @@
     <template v-for="sauce in sauces" :key="sauce.id">
       <label
         class="radio ingredients__input"
-        @click="emit('setSauce', sauce.name_eng)"
+        @click="emit('setSauce', translateNameToEng(sauce.name))"
       >
         <input
           type="radio"
           name="sauce"
-          :value="sauce.name_eng"
-          :checked="props.sauce === sauce.name_eng"
+          :value="translateNameToEng(sauce.name)"
+          :checked="props.sauce === translateNameToEng(sauce.name)"
         />
         <span>{{ sauce.name }}</span>
       </label>
@@ -20,6 +20,7 @@
 
 <script setup>
 import sauces from "../../mocks/sauces.json";
+import { translateNameToEng } from '../../helpers/translate-name';
 
 const props = defineProps({
   sauce: {

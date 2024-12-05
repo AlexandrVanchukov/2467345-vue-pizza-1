@@ -12,7 +12,7 @@
       <div class="content__constructor">
         <div
           class="pizza"
-          :class="`pizza--foundation--${props.dough}-${props.sauce}`"
+          :class="`pizza--foundation--${doughtConverter()}-${props.sauce}`"
         >
           <div class="pizza__wrapper">
             <template
@@ -23,7 +23,7 @@
                 class="pizza__filling"
                 :class="`pizza__filling--${
                   props.fillings[filling] !== 0 ? filling : ''
-                }`"
+                } ${fillingAmountStyle(props.fillings[filling])}}`"
               ></div>
             </template>
           </div>
@@ -32,7 +32,7 @@
     </app-drop>
 
     <div class="content__result">
-      <p>Итого: 0 ₽</p>
+      <p>Итого: {{ props.price }} ₽</p>
       <button type="button" class="button" disabled>Готовьте!</button>
     </div>
   </div>
@@ -58,7 +58,26 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  price: {
+    type: Number,
+    required: true,
+  },
 });
+
+function doughtConverter() {
+  return props.dough === 1 ? "small" : "big";
+}
+
+function fillingAmountStyle(amount) {
+  switch (amount) {
+    case 2:
+      return "pizza__filling--second";
+    case 3:
+      return "pizza__filling--third";
+    default:
+      return "";
+  }
+}
 </script>
 
 <style lang="scss" scoped>

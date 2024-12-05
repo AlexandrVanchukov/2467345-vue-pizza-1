@@ -14,14 +14,17 @@
               :key="ingredient.id"
               class="ingredients__item"
             >
-              <app-drag :transfer-data="ingredient.name_eng">
-                <span
-                  class="filling"
-                  :class="getFillingStyle(ingredient.name_eng)"
+              <app-drag
+                :transfer-data="translateNameToEng(ingredient.name)"
+                :is-dragable="isDragable(ingredient.name)"
+              >
+                <span class="filling" :class="getFillingStyle(ingredient.name)"
                   >{{ ingredient.name }}
                 </span>
               </app-drag>
-              <AppCounter v-model="fillings[ingredient.name_eng]" />
+              <AppCounter
+                v-model="fillings[translateNameToEng(ingredient.name)]"
+              />
               <!-- <div class="counter counter--orange ingredients__counter">
                 <button
                   type="button"
@@ -59,6 +62,9 @@ import ingredients from "../../mocks/ingredients.json";
 import IngredientsSauce from "./IngredientsSauce.vue";
 import AppDrag from "../../common/components/AppDrag.vue";
 import AppCounter from "@/common/components/AppCounter.vue";
+
+import { translateNameToEng } from "../../helpers/translate-name";
+
 const props = defineProps({
   sauce: {
     type: String,
@@ -75,7 +81,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["setFillings", "drop", "update:fillings"]);
+const emit = defineEmits(["drop", "update:fillings"]);
 
 const fillings = computed({
   get() {
@@ -85,20 +91,14 @@ const fillings = computed({
     emit("update:fillings", fillings);
   },
 });
-console.log(fillings);
-console.log(fillings.value);
-console.log(fillings.value["mushrooms"]);
-function getFillingStyle(ingredient_name) {
-  return `filling--${ingredient_name}`;
+
+function isDragable(filling_name) {
+  return props.fillings[translateNameToEng(filling_name)] > 2 ? false : true;
 }
 
-// function getFillingValue(fillingName) {
-//   if (props.fillings.hasOwnProperty(fillingName)) {
-//     return props.fillings[fillingName];
-//   } else {
-//     return "0";
-//   }
-// }
+function getFillingStyle(ingredient_name) {
+  return `filling--${translateNameToEng(ingredient_name)}`;
+}
 </script>
 
 <style lang="scss" scoped>
