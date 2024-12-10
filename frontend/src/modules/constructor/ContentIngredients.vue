@@ -67,8 +67,6 @@ const handleUpdate = (ingredientName, newValue) => {
     ingredientsData
   );
   pizzaStore.setIngredients(result);
-  console.log(newIngredients._value);
-  console.log(result);
 };
 
 function isDragable(ingredient_id) {

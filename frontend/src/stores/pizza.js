@@ -63,6 +63,7 @@ export const usePizzaStore = defineStore("pizza", {
       this.ingredients = ingredients;
     },
     addIngredient(ingredientId) {
+      console.log(ingredientId);
       this.ingredients.push({
         ingredientId,
         quantity: 1,

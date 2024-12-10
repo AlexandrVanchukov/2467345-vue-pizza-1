@@ -46,6 +46,12 @@ import ingredientsData from "../mocks/ingredients.json";
 import saucesData from "../mocks/sauces.json";
 import sizesData from "../mocks/sizes.json";
 
+import { useDataStore } from "../stores";
+import { usePizzaStore } from "../stores";
+
+const dataStore = useDataStore();
+const pizzaStore = usePizzaStore();
+
 const dough = ref("light");
 const setDough = (value) => {
   dough.value = value;
@@ -87,8 +93,8 @@ watch(
   { deep: true }
 );
 
-function moveFilling(fillingName) {
-  fillings.value[fillingName]++;
+function moveFilling(filling_id) {
+  pizzaStore.incrementIngredientQuantity(filling_id);
 }
 
 const price = ref(0);
