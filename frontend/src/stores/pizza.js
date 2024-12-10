@@ -1,5 +1,5 @@
-import { defineStore } from "@pinia";
-import { useDataStore } from "@/stores/dataStore";
+import { defineStore } from "pinia";
+import { useDataStore } from "./data";
 import { pizzaPrice } from "../helpers";
 
 const getItemByIdOrDefault = (dataArray, id) => {

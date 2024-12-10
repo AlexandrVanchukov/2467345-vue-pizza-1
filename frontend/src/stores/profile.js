@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { defineStore } from "@pinia";
+import { defineStore } from "pinia";
 
 export const useProfileStore = defineStore("profile", {
   state: () => ({

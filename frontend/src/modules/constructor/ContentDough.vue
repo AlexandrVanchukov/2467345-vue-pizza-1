@@ -27,22 +27,10 @@
 </template>
 
 <script setup>
-import doughs from "../../mocks/dough.json";
 import { translateNameToEng } from "../../helpers/translate-name";
-
-const props = defineProps({
-  dough: {
-    type: String,
-    required: true,
-    default: "light",
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-});
-
-const emit = defineEmits(["setDough", "setPrice"]);
+import { usePizzaStore } from "../../stores";
+const pizzaStore = usePizzaStore();
+console.log(pizzaStore.doughId);
 
 function getDoughStyle(dough_name) {
   return `dough__input--${translateNameToEng(dough_name)}`;
