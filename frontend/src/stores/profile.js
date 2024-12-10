@@ -11,6 +11,25 @@ export const useProfileStore = defineStore("profile", {
       addresses: [],
     },
   }),
-  getters: {},
+  getters: {
+    getOrders: (state) => {
+      return state.orders;
+    },
+    getName: (state) => {
+      return state.name;
+    },
+    getEmail: (state) => {
+      return state.email;
+    },
+    getAvatar: (state) => {
+      return state.avatar;
+    },
+    getPhone: (state) => {
+      return state.phone;
+    },
+    getAddresses: (state) => {
+      return state.addresses;
+    },
+  },
   actions: {},
 });
