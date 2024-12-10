@@ -16,7 +16,7 @@ export const usePizzaStore = defineStore("pizza", {
     ingredients: [
       {
         ingredientId: 1,
-        quantity: 1,
+        quantity: 3,
       },
     ],
   }),

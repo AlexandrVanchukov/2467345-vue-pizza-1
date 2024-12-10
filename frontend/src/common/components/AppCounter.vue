@@ -32,6 +32,7 @@ const props = defineProps({
     required: true,
   },
 });
+console.log(props.modelValue);
 const emit = defineEmits(["update:modelValue"]);
 
 const isDisabledMinus = () => {
