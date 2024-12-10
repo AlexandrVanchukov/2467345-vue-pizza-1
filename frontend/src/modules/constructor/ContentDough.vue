@@ -7,15 +7,15 @@
         <template v-for="dough in doughs" :key="dough.id">
           <label
             class="dough__input"
-            :class="getDoughStyle(dough.name)"
-            @click="emit('setDough', translateNameToEng(dough.name))"
+            :class="getDoughStyle(dough.name_eng)"
+            @click="pizzaStore.setDough(dough.id)"
           >
             <input
               type="radio"
               name="dought"
-              :value="translateNameToEng(dough.name)"
+              :value="dough.name_eng"
               class="visually-hidden"
-              :checked="props.dough === translateNameToEng(dough.name)"
+              :checked="pizzaStore.doughId === dough.id"
             />
             <b>{{ dough.name }}</b>
             <span>{{ dough.description }}</span>
@@ -27,13 +27,16 @@
 </template>
 
 <script setup>
-import { translateNameToEng } from "../../helpers/translate-name";
 import { usePizzaStore } from "../../stores";
-const pizzaStore = usePizzaStore();
-console.log(pizzaStore.doughId);
+import { useDataStore } from "../../stores";
 
-function getDoughStyle(dough_name) {
-  return `dough__input--${translateNameToEng(dough_name)}`;
+const pizzaStore = usePizzaStore();
+const dataStore = useDataStore();
+
+const doughs = dataStore.dough;
+
+function getDoughStyle(dough_name_eng) {
+  return `dough__input--${dough_name_eng}`;
 }
 </script>
 

@@ -10,13 +10,13 @@ export const usePizzaStore = defineStore("pizza", {
   state: () => ({
     index: null,
     name: "",
-    sauceId: 0,
-    doughId: 0,
-    sizeId: 0,
+    sauceId: 1,
+    doughId: 1,
+    sizeId: 1,
     ingredients: [
       {
-        ingredientId: 0,
-        quantity: 0,
+        ingredientId: 1,
+        quantity: 1,
       },
     ],
   }),
