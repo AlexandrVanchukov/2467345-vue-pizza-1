@@ -1,19 +1,19 @@
 export default [
   {
     path: "/",
-    name: "MainView",
+    name: "home",
     component: () => import("../views/MainView.vue"),
     meta: { layout: "AppLayoutOnlyHeader" },
   },
   {
     path: "/cart",
-    name: "CartView",
+    name: "cart",
     component: () => import("../views/CartView.vue"),
     meta: { layout: "AppLayoutOnlyHeader" },
   },
   {
     path: "/login",
-    name: "SignInView",
+    name: "login",
     component: () => import("../views/SignInView.vue"),
     meta: { layout: "AppLayoutEmpty" },
   },
@@ -22,12 +22,12 @@ export default [
     children: [
       {
         path: "profile",
-        name: "UserDataView",
+        name: "profile",
         component: () => import("../views/UserDataView.vue"),
       },
       {
         path: "orders",
-        name: "OrdersView",
+        name: "orders",
         component: () => import("../views/OrdersView.vue"),
       },
     ],

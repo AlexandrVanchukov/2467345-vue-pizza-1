@@ -1,8 +1,8 @@
 <template>
   <div class="sign-form">
-    <a href="#" class="close close--white">
+    <router-link :to="{ name: 'home' }" class="close close--white">
       <span class="visually-hidden">Закрыть форму авторизации</span>
-    </a>
+    </router-link>
     <div class="sign-form__title">
       <h1 class="title title--small">Авторизуйтесь на сайте</h1>
     </div>
@@ -19,7 +19,9 @@
           <input type="password" name="pass" placeholder="***********" />
         </label>
       </div>
-      <button type="submit" class="button">Авторизоваться</button>
+      <router-link :to="{ name: 'home' }">
+        <button type="submit" class="button">Авторизоваться</button>
+      </router-link>
     </form>
   </div>
 </template>

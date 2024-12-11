@@ -35,9 +35,11 @@
 
     <div class="content__result">
       <p>Итого: {{ pizzaStore.price }} ₽</p>
-      <button type="button" class="button" @click="savePizza()">
-        Готовьте!
-      </button>
+      <router-link :to="{ name: 'cart' }">
+        <button type="button" class="button" @click="savePizza()">
+          Готовьте!
+        </button>
+      </router-link>
     </div>
   </div>
 </template>
