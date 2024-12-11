@@ -22,6 +22,9 @@
 </template>
 
 <script setup>
+// import { useCartStore } from "../stores";
+
+// const cartStore = useCartStore();
 </script>
 
 <style lang="scss" scoped>
