@@ -6,6 +6,8 @@
         type="text"
         name="pizza_name"
         placeholder="Введите название пиццы"
+        :value="pizzaStore.name"
+        @input="nameUpdate($event.target.value)"
       />
     </label>
     <app-drop @drop="moveFilling">
@@ -82,6 +84,10 @@ function fillingAmountStyle(amount) {
 
 function savePizza() {
   cartStore.savePizza(pizzaStore.$state);
+}
+
+function nameUpdate(newName) {
+  pizzaStore.setName(newName);
 }
 </script>
 
