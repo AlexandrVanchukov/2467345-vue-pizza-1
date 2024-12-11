@@ -14,7 +14,6 @@ function translateNames(dataJSON) {
     name_eng: translateNameToEng(item.name),
   }));
 
-  console.log(updatedJSON);
   return updatedJSON;
 }
 

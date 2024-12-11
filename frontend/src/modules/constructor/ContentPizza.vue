@@ -33,7 +33,9 @@
 
     <div class="content__result">
       <p>Итого: {{ pizzaStore.price }} ₽</p>
-      <button type="button" class="button" disabled>Готовьте!</button>
+      <button type="button" class="button" @click="savePizza()">
+        Готовьте!
+      </button>
     </div>
   </div>
 </template>
@@ -41,11 +43,12 @@
 <script setup>
 import { useDataStore } from "../../stores";
 import { usePizzaStore } from "../../stores";
+import { useCartStore } from "../../stores";
 import { transformIngredients } from "../../helpers";
 
 const dataStore = useDataStore();
 const pizzaStore = usePizzaStore();
-
+const cartStore = useCartStore();
 const sauce = () => {
   const foundObject = dataStore.sauce.find((s) => s.id === pizzaStore.sauceId);
   return foundObject;
@@ -62,12 +65,9 @@ const fillings = () => {
 
 import AppDrop from "../../common/components/AppDrop.vue";
 
-const props = defineProps({
-  moveFilling: {
-    type: Function,
-    required: true,
-  },
-});
+function moveFilling(filling_id) {
+  pizzaStore.incrementIngredientQuantity(filling_id);
+}
 
 function fillingAmountStyle(amount) {
   switch (amount) {
@@ -78,6 +78,10 @@ function fillingAmountStyle(amount) {
     default:
       return "";
   }
+}
+
+function savePizza() {
+  cartStore.savePizza(pizzaStore.$state);
 }
 </script>
 

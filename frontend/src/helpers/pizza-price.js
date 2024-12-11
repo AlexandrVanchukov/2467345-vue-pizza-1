@@ -7,7 +7,6 @@ export const pizzaPrice = (state) => {
   result += dataStore.dough.find((d) => d.id == state.doughId).price;
 
   state.ingredients.forEach(function (ingredient) {
-    console.log(ingredient);
     if (ingredient.quantity > 0) {
       result +=
         dataStore.ingredients.find((i) => i.id == ingredient.ingredientId)

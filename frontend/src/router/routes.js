@@ -6,19 +6,13 @@ export default [
     meta: { layout: "AppLayoutOnlyHeader" },
   },
   {
-    path: "/",
-    name: "IndexView",
-    component: () => import("../views/IndexView.vue"),
-    meta: { layout: "AppLayoutEmpty" },
-  },
-  {
     path: "/cart",
     name: "CartView",
     component: () => import("../views/CartView.vue"),
     meta: { layout: "AppLayoutOnlyHeader" },
   },
   {
-    path: "/sign-in",
+    path: "/login",
     name: "SignInView",
     component: () => import("../views/SignInView.vue"),
     meta: { layout: "AppLayoutEmpty" },
