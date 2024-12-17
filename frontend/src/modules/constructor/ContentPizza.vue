@@ -86,6 +86,7 @@ function fillingAmountStyle(amount) {
 
 function savePizza() {
   cartStore.savePizza(pizzaStore.$state);
+  pizzaStore.setDefault();
 }
 
 function nameUpdate(newName) {

@@ -26,6 +26,8 @@
               </app-drag>
               <AppCounter
                 v-model="fillings[ingredient.name_eng]"
+                :min="0"
+                :max="3"
                 @update:model-value="
                   (newValue) => handleUpdate(ingredient.name_eng, newValue)
                 "

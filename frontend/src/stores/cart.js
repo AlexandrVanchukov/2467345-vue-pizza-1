@@ -9,7 +9,22 @@ export const useCartStore = defineStore("cart", {
       flat: "",
       comment: "",
     },
-    pizzas: [],
+    pizzas: [
+      // {
+      //   index: 0,
+      //   name: "test_pizza",
+      //   sauceId: 1,
+      //   doughId: 1,
+      //   sizeId: 1,
+      //   quantity: 1,
+      //   ingredients: [
+      //     {
+      //       ingredientId: 1,
+      //       quantity: 3,
+      //     },
+      //   ],
+      // },
+    ],
     misc: [],
   }),
   getters: {
@@ -19,6 +34,7 @@ export const useCartStore = defineStore("cart", {
         0
       );
       const miscPrice = state.misc.reduce((sum, m) => sum + m.price, 0);
+      console.log(pizzasPrice + " " + miscPrice);
       return pizzasPrice + miscPrice;
     },
     getPhone: (state) => {
@@ -38,6 +54,7 @@ export const useCartStore = defineStore("cart", {
     savePizza(pizza) {
       const { index, ...pizzaData } = pizza;
       const updatePizza = (i) => {
+        console.log(this.pizzas);
         this.pizzas[i] = {
           ...this.pizzas[i],
           ...pizzaData,
@@ -46,13 +63,16 @@ export const useCartStore = defineStore("cart", {
       const addNewPizza = () => {
         this.pizzas.push({
           quantity: 1,
+          index: this.pizzas.length,
           ...pizzaData,
         });
       };
       if (index !== null && index >= 0) {
         updatePizza(index);
+        console.log("  UPDATE");
       } else {
         addNewPizza();
+        console.log("  ADD NEW");
       }
     },
     setPizzaQuantity(index, count) {

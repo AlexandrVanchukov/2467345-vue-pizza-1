@@ -98,11 +98,11 @@ export const usePizzaStore = defineStore("pizza", {
     },
 
     removeIngredient(ingredientId) {
-      const index = this.ingredients.findIndex(
+      const id = this.ingredients.findIndex(
         (item) => item.ingredientId === ingredientId
       );
-      if (index !== -1) {
-        this.ingredients.splice(index, 1);
+      if (id !== -1) {
+        this.ingredients.splice(id, 1);
       }
     },
 
@@ -113,6 +113,20 @@ export const usePizzaStore = defineStore("pizza", {
       this.doughId = pizza.doughId;
       this.sizeId = pizza.sizeId;
       this.ingredients = pizza.ingredients;
+    },
+
+    setDefault() {
+      this.index = null;
+      this.name = "";
+      this.sauceId = 1;
+      this.doughId = 1;
+      this.sizeId = 1;
+      this.ingredients = [
+        {
+          ingredientId: 1,
+          quantity: 3,
+        },
+      ];
     },
   },
 });
