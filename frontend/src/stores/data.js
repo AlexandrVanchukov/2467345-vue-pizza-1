@@ -23,7 +23,7 @@ export const useDataStore = defineStore("data", {
     ingredients: translateNames(ingredientsJSON),
     sauce: translateNames(saucesJSON),
     sizes: sizesJSON,
-    misc: miscJSON,
+    misc: translateNames(miscJSON),
   }),
   getters: {},
   actions: {},

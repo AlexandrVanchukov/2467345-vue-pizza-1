@@ -25,7 +25,12 @@ export const useCartStore = defineStore("cart", {
       //   ],
       // },
     ],
-    misc: [],
+    misc: [
+      {
+        miscId: 1,
+        quantity: 1,
+      },
+    ],
   }),
   getters: {
     totalCartPrice: (state) => {

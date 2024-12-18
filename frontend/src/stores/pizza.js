@@ -1,10 +1,6 @@
 import { defineStore } from "pinia";
 import { useDataStore } from "./data";
-import { pizzaPrice } from "../helpers";
-
-const getItemByIdOrDefault = (dataArray, id) => {
-  return dataArray.find((item) => item.id === id) ?? dataArray[0];
-};
+import { pizzaPrice, getItemByIdOrDefault } from "../helpers";
 
 export const usePizzaStore = defineStore("pizza", {
   state: () => ({
