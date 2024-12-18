@@ -10,20 +10,48 @@ export const useCartStore = defineStore("cart", {
       comment: "",
     },
     pizzas: [
-      // {
-      //   index: 0,
-      //   name: "test_pizza",
-      //   sauceId: 1,
-      //   doughId: 1,
-      //   sizeId: 1,
-      //   quantity: 1,
-      //   ingredients: [
-      //     {
-      //       ingredientId: 1,
-      //       quantity: 3,
-      //     },
-      //   ],
-      // },
+      {
+        index: 0,
+        name: "test_pizza",
+        sauceId: 1,
+        doughId: 1,
+        sizeId: 1,
+        quantity: 1,
+        ingredients: [
+          {
+            ingredientId: 1,
+            quantity: 3,
+          },
+        ],
+      },
+      {
+        index: 1,
+        name: "test",
+        sauceId: 1,
+        doughId: 1,
+        sizeId: 1,
+        quantity: 1,
+        ingredients: [
+          {
+            ingredientId: 1,
+            quantity: 3,
+          },
+        ],
+      },
+      {
+        index: 2,
+        name: "pizza",
+        sauceId: 1,
+        doughId: 1,
+        sizeId: 1,
+        quantity: 1,
+        ingredients: [
+          {
+            ingredientId: 1,
+            quantity: 3,
+          },
+        ],
+      },
     ],
     misc: [
       {
@@ -74,14 +102,21 @@ export const useCartStore = defineStore("cart", {
       };
       if (index !== null && index >= 0) {
         updatePizza(index);
-        console.log("  UPDATE");
       } else {
         addNewPizza();
-        console.log("  ADD NEW");
       }
     },
     setPizzaQuantity(index, count) {
-      if (this.pizzas[index]) {
+      const removePizzaItem = () => {
+        console.log(index);
+        this.pizzas.splice(index, 1);
+        this.pizzas.forEach((item, i) => {
+          item.index = i;
+        });
+      };
+      if (count === 0) {
+        removePizzaItem();
+      } else if (this.pizzas[index]) {
         this.pizzas[index].quantity = count;
       }
     },

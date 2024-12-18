@@ -31,10 +31,10 @@
 
       <AppCounter
         v-model="item.quantity"
-        :min="1"
+        :min="0"
         :max="10"
         @update:model-value="
-          (newValue) => cartStore.setPizzaQuantity(item.id, newValue)
+          (newValue) => cartStore.setPizzaQuantity(item.index, newValue)
         "
       />
 
