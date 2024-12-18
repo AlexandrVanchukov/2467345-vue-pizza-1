@@ -24,34 +24,6 @@ export const useCartStore = defineStore("cart", {
           },
         ],
       },
-      {
-        index: 1,
-        name: "test",
-        sauceId: 1,
-        doughId: 1,
-        sizeId: 1,
-        quantity: 1,
-        ingredients: [
-          {
-            ingredientId: 1,
-            quantity: 3,
-          },
-        ],
-      },
-      {
-        index: 2,
-        name: "pizza",
-        sauceId: 1,
-        doughId: 1,
-        sizeId: 1,
-        quantity: 1,
-        ingredients: [
-          {
-            ingredientId: 1,
-            quantity: 3,
-          },
-        ],
-      },
     ],
     misc: [
       {
