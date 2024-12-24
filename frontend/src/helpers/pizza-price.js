@@ -1,22 +1,22 @@
-import { useDataStore } from "../stores";
+import { useDataStore } from "../stores/data";
 
-const dataStore = useDataStore();
+// const dataStore = useDataStore();
 
 export const pizzaPrice = (state) => {
   var result = 0;
-  result += dataStore.dough.find((d) => d.id == state.doughId).price;
+  result += useDataStore().dough.find((d) => d.id == state.doughId).price;
 
   state.ingredients.forEach(function (ingredient) {
     if (ingredient.quantity > 0) {
       result +=
-        dataStore.ingredients.find((i) => i.id == ingredient.ingredientId)
+        useDataStore().ingredients.find((i) => i.id == ingredient.ingredientId)
           .price * ingredient.quantity;
     }
   });
 
-  result += dataStore.sauce.find((s) => s.id == state.sauceId).price;
+  result += useDataStore().sauce.find((s) => s.id == state.sauceId).price;
 
-  result *= dataStore.sizes.find((s) => s.id == state.sizeId).multiplier;
+  result *= useDataStore().sizes.find((s) => s.id == state.sizeId).multiplier;
 
   return result;
 };

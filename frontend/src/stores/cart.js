@@ -1,4 +1,7 @@
 import { defineStore } from "pinia";
+import { useDataStore } from "./data";
+import { getItemByIdOrDefault } from "../helpers/get-item-by-id-or-default";
+import { pizzaPrice } from "../helpers/pizza-price";
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
@@ -35,10 +38,14 @@ export const useCartStore = defineStore("cart", {
   getters: {
     totalCartPrice: (state) => {
       const pizzasPrice = state.pizzas.reduce(
-        (sum, pizza) => sum + pizza.price,
+        (sum, pizza) => sum + pizzaPrice(pizza) * pizza.quantity,
         0
       );
-      const miscPrice = state.misc.reduce((sum, m) => sum + m.price, 0);
+      const miscPrice = state.misc.reduce(
+        (sum, m) =>
+          sum + getItemByIdOrDefault(useDataStore().misc, m.miscId).price,
+        0
+      );
       console.log(pizzasPrice + " " + miscPrice);
       return pizzasPrice + miscPrice;
     },
