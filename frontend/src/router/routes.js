@@ -23,7 +23,7 @@ export default [
       {
         path: "profile",
         name: "profile",
-        component: () => import("../views/UserDataView.vue"),
+        component: () => import("../views/ProfileView.vue"),
       },
       {
         path: "orders",
