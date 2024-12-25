@@ -1,21 +1,38 @@
 <template>
   <div class="layout__sidebar sidebar">
     <router-link :to="{ name: 'home' }" class="logo layout__logo">
-      <img src="img/logo.svg" alt="V!U!E! Pizza logo" width="90" height="40" />
+      <img
+        src="@/assets/img/logo.svg"
+        alt="V!U!E! Pizza logo"
+        width="90"
+        height="40"
+      />
     </router-link>
 
-    <router-link :to="{ name: 'orders' }" class="layout__link"
+    <router-link
+      :to="{ name: 'orders' }"
+      :class="[
+        'layout__link',
+        route.name === 'orders' ? 'layout__link--active' : '',
+      ]"
       >История заказов</router-link
     >
     <router-link
       :to="{ name: 'profile' }"
-      class="layout__link layout__link--active"
+      :class="[
+        'layout__link',
+        route.name === 'profile' ? 'layout__link--active' : '',
+      ]"
       >Мои данные</router-link
     >
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+</script>
 
 <style lang="scss" scoped>
 @import "@/assets/scss/app.scss";

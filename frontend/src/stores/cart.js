@@ -63,7 +63,8 @@ export const useCartStore = defineStore("cart", {
     },
   },
   actions: {
-    savePizza(pizza) {
+    savePizza(pizza, quantity) {
+      const q = quantity || 1;
       const { index, ...pizzaData } = pizza;
       const updatePizza = (i) => {
         console.log(this.pizzas);
@@ -74,7 +75,7 @@ export const useCartStore = defineStore("cart", {
       };
       const addNewPizza = () => {
         this.pizzas.push({
-          quantity: 1,
+          quantity: q,
           index: this.pizzas.length,
           ...pizzaData,
         });

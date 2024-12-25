@@ -18,7 +18,7 @@
           <ul>
             <li>
               {{ findNameById(dataStore.sizes, item.sizeId) }},
-              {{ idToPhrase[item.doughId] || "на необычном тесте" }}
+              {{ idDoughToPhrase[item.doughId] || "на необычном тесте" }}
             </li>
             <li>
               Соус:
@@ -62,15 +62,12 @@ import { useDataStore } from "../../stores";
 import { usePizzaStore } from "../../stores";
 import { pizzaPrice } from "../../helpers";
 import { findNameById } from "../../helpers";
+import { idDoughToPhrase } from "../../common/constants";
+import { IMG_SIZE } from "../../common/constants";
 
 const cartStore = useCartStore();
 const dataStore = useDataStore();
 const pizzaStore = usePizzaStore();
-const IMG_SIZE = 56;
-const idToPhrase = {
-  1: "на тонком тесте",
-  2: "на толстом тесте",
-};
 
 console.log(cartStore.pizzas);
 

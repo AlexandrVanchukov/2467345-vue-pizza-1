@@ -218,10 +218,8 @@
 
 <script setup>
 import { ref } from "vue";
-import { useDataStore } from "../stores";
 import { useProfileStore } from "../stores";
 
-const dataStore = useDataStore();
 const profileStore = useProfileStore();
 
 // Состояние для редактирования
