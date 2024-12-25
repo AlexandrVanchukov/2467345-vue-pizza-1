@@ -4,18 +4,18 @@
       <h2 class="title title--small sheet__title">Выберите размер</h2>
 
       <div class="sheet__content diameter">
-        <template v-for="size in sizes" :key="size.id">
+        <template v-for="size in sizesData" :key="size.id">
           <label
             class="diameter__input"
             :class="`diameter__input--${getDiameterValue(size.name)}`"
-            @click="emit('setDiameter', getDiameterValue(size.name))"
+            @click="pizzaStore.setSize(size.id)"
           >
             <input
               type="radio"
               name="diameter"
               :value="getDiameterValue(size.name)"
               class="visually-hidden"
-              :checked="props.diameter === getDiameterValue(size.name)"
+              :checked="pizzaStore.sizeId === size.id"
             />
             <span>{{ size.name }}</span>
           </label>
@@ -26,17 +26,13 @@
 </template>
 
 <script setup>
-import sizes from "../../mocks/sizes.json";
+import { useDataStore } from "../../stores";
+import { usePizzaStore } from "../../stores";
 
-const props = defineProps({
-  diameter: {
-    type: String,
-    required: true,
-    default: "small",
-  },
-});
+const dataStore = useDataStore();
+const pizzaStore = usePizzaStore();
 
-const emit = defineEmits(["setDiameter"]);
+const sizesData = dataStore.sizes;
 
 function getDiameterValue(diameter) {
   let diameterValue = "";

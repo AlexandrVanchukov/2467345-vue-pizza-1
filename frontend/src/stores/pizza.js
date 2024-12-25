@@ -1,22 +1,18 @@
-import { defineStore } from "@pinia";
-import { useDataStore } from "@/stores/dataStore";
-import { pizzaPrice } from "../helpers";
-
-const getItemByIdOrDefault = (dataArray, id) => {
-  return dataArray.find((item) => item.id === id) ?? dataArray[0];
-};
+import { defineStore } from "pinia";
+import { useDataStore } from "./data";
+import { pizzaPrice, getItemByIdOrDefault } from "../helpers";
 
 export const usePizzaStore = defineStore("pizza", {
   state: () => ({
     index: null,
     name: "",
-    sauceId: 0,
-    doughId: 0,
-    sizeId: 0,
+    sauceId: 1,
+    doughId: 1,
+    sizeId: 1,
     ingredients: [
       {
-        ingredientId: 0,
-        quantity: 0,
+        ingredientId: 1,
+        quantity: 3,
       },
     ],
   }),
@@ -98,11 +94,11 @@ export const usePizzaStore = defineStore("pizza", {
     },
 
     removeIngredient(ingredientId) {
-      const index = this.ingredients.findIndex(
+      const id = this.ingredients.findIndex(
         (item) => item.ingredientId === ingredientId
       );
-      if (index !== -1) {
-        this.ingredients.splice(index, 1);
+      if (id !== -1) {
+        this.ingredients.splice(id, 1);
       }
     },
 
@@ -113,6 +109,20 @@ export const usePizzaStore = defineStore("pizza", {
       this.doughId = pizza.doughId;
       this.sizeId = pizza.sizeId;
       this.ingredients = pizza.ingredients;
+    },
+
+    setDefault() {
+      this.index = null;
+      this.name = "";
+      this.sauceId = 1;
+      this.doughId = 1;
+      this.sizeId = 1;
+      this.ingredients = [
+        {
+          ingredientId: 1,
+          quantity: 3,
+        },
+      ];
     },
   },
 });

@@ -31,15 +31,23 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  min: {
+    type: Number,
+    required: true,
+  },
+  max: {
+    type: Number,
+    required: true,
+  },
 });
 const emit = defineEmits(["update:modelValue"]);
 
 const isDisabledMinus = () => {
-  return props.modelValue < 1;
+  return props.modelValue < props.min + 1;
 };
 
 const isDisabledPlus = () => {
-  return props.modelValue > 2;
+  return props.modelValue > props.max - 1;
 };
 
 function minusHandler() {

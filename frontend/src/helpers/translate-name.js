@@ -1,5 +1,6 @@
 import dough from "../common/data/doughSizes.js";
 import ingredients from "../common/data/ingredients.js";
+import misc from "../common/data/misc.js";
 import sauces from "../common/data/sauces.js";
 import sizes from "../common/data/sizes.js";
 
@@ -8,6 +9,7 @@ const translations = {
   ...ingredients,
   ...sauces,
   ...sizes,
+  ...misc,
 };
 
 const translateNameToEng = (name) => {

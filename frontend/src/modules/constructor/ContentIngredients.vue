@@ -4,50 +4,34 @@
       <h2 class="title title--small sheet__title">Выберите ингредиенты</h2>
 
       <div class="sheet__content ingredients">
-        <IngredientsSauce :sauce="sauce" @set-sauce="setSauce" />
+        <IngredientsSauce />
 
         <div class="ingredients__filling">
           <p>Начинка:</p>
           <ul class="ingredients__list">
             <li
-              v-for="ingredient in ingredients"
+              v-for="ingredient in ingredientsData"
               :key="ingredient.id"
               class="ingredients__item"
             >
               <app-drag
-                :transfer-data="translateNameToEng(ingredient.name)"
-                :is-dragable="isDragable(ingredient.name)"
+                :transfer-data="ingredient.id + ''"
+                :is-dragable="isDragable(ingredient.id)"
               >
-                <span class="filling" :class="getFillingStyle(ingredient.name)"
+                <span
+                  class="filling"
+                  :class="getFillingStyle(ingredient.name_eng)"
                   >{{ ingredient.name }}
                 </span>
               </app-drag>
               <AppCounter
-                v-model="fillings[translateNameToEng(ingredient.name)]"
+                v-model="fillings[ingredient.name_eng]"
+                :min="0"
+                :max="3"
+                @update:model-value="
+                  (newValue) => handleUpdate(ingredient.name_eng, newValue)
+                "
               />
-              <!-- <div class="counter counter--orange ingredients__counter">
-                <button
-                  type="button"
-                  class="counter__button counter__button--minus"
-                  :disabled="isDisabledMinus(ingredient.name_eng)"
-                  @click="minusHandler(ingredient.name_eng)"
-                >
-                  <span class="visually-hidden">Меньше</span>
-                </button>
-                <input
-                  type="text"
-                  name="counter"
-                  class="counter__input"
-                  :value="getFillingValue(ingredient.name_eng)"
-                />
-                <button
-                  type="button"
-                  class="counter__button counter__button--plus"
-                  @click="plusHandler(ingredient.name_eng)"
-                >
-                  <span class="visually-hidden">Больше</span>
-                </button>
-              </div> -->
             </li>
           </ul>
         </div>
@@ -58,46 +42,48 @@
 
 <script setup>
 import { computed } from "vue";
-import ingredients from "../../mocks/ingredients.json";
 import IngredientsSauce from "./IngredientsSauce.vue";
 import AppDrag from "../../common/components/AppDrag.vue";
 import AppCounter from "@/common/components/AppCounter.vue";
+import { transformIngredients } from "../../helpers";
+import { reverseTransformIngredients } from "../../helpers";
 
-import { translateNameToEng } from "../../helpers/translate-name";
+import { useDataStore } from "../../stores";
+import { usePizzaStore } from "../../stores";
 
-const props = defineProps({
-  sauce: {
-    type: String,
-    required: true,
-    default: "tomato",
-  },
-  setSauce: {
-    type: Function,
-    required: true,
-  },
-  fillings: {
-    type: Object,
-    required: true,
-  },
-});
+const dataStore = useDataStore();
+const pizzaStore = usePizzaStore();
 
-const emit = defineEmits(["drop", "update:fillings"]);
+const ingredientsData = dataStore.ingredients;
 
 const fillings = computed({
   get() {
-    return props.fillings;
-  },
-  set(fillings) {
-    emit("update:fillings", fillings);
+    return transformIngredients(pizzaStore.ingredients, ingredientsData);
   },
 });
 
-function isDragable(filling_name) {
-  return props.fillings[translateNameToEng(filling_name)] > 2 ? false : true;
+const handleUpdate = (ingredientName, newValue) => {
+  const newIngredients = { ...fillings, [ingredientName]: newValue };
+  const result = reverseTransformIngredients(
+    newIngredients._value,
+    ingredientsData
+  );
+  pizzaStore.setIngredients(result);
+};
+
+function isDragable(ingredient_id) {
+  const ingredient = pizzaStore.ingredients.find(
+    (i) => i.ingredientId === ingredient_id
+  );
+  if (ingredient) {
+    return ingredient.quantity > 2 ? false : true;
+  } else {
+    return true;
+  }
 }
 
-function getFillingStyle(ingredient_name) {
-  return `filling--${translateNameToEng(ingredient_name)}`;
+function getFillingStyle(ingredient_name_eng) {
+  return `filling--${ingredient_name_eng}`;
 }
 </script>
 

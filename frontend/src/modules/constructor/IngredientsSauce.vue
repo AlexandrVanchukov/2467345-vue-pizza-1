@@ -1,16 +1,16 @@
 <template>
   <div class="ingredients__sauce">
     <p>Основной соус:</p>
-    <template v-for="sauce in sauces" :key="sauce.id">
+    <template v-for="sauce in sauceData" :key="sauce.id">
       <label
         class="radio ingredients__input"
-        @click="emit('setSauce', translateNameToEng(sauce.name))"
+        @click="pizzaStore.setSauce(sauce.id)"
       >
         <input
           type="radio"
           name="sauce"
-          :value="translateNameToEng(sauce.name)"
-          :checked="props.sauce === translateNameToEng(sauce.name)"
+          :value="sauce.name_eng"
+          :checked="pizzaStore.sauceId === sauce.id"
         />
         <span>{{ sauce.name }}</span>
       </label>
@@ -19,18 +19,13 @@
 </template>
 
 <script setup>
-import sauces from "../../mocks/sauces.json";
-import { translateNameToEng } from '../../helpers/translate-name';
+import { useDataStore } from "../../stores";
+import { usePizzaStore } from "../../stores";
 
-const props = defineProps({
-  sauce: {
-    type: String,
-    required: true,
-    default: "tomato",
-  },
-});
+const dataStore = useDataStore();
+const pizzaStore = usePizzaStore();
 
-const emit = defineEmits(["setSauce"]);
+const sauceData = dataStore.sauce;
 </script>
 
 <style lang="scss" scoped>

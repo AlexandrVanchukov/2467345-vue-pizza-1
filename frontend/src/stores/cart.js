@@ -1,4 +1,7 @@
-import { defineStore } from "@pinia";
+import { defineStore } from "pinia";
+import { useDataStore } from "./data";
+import { getItemByIdOrDefault } from "../helpers/get-item-by-id-or-default";
+import { pizzaPrice } from "../helpers/pizza-price";
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
@@ -9,16 +12,43 @@ export const useCartStore = defineStore("cart", {
       flat: "",
       comment: "",
     },
-    pizzas: [],
-    misc: [],
+    pizzas: [
+      {
+        index: 0,
+        name: "test_pizza",
+        sauceId: 1,
+        doughId: 1,
+        sizeId: 1,
+        quantity: 1,
+        ingredients: [
+          {
+            ingredientId: 1,
+            quantity: 3,
+          },
+        ],
+      },
+    ],
+    misc: [
+      {
+        miscId: 1,
+        quantity: 1,
+      },
+    ],
   }),
   getters: {
     totalCartPrice: (state) => {
       const pizzasPrice = state.pizzas.reduce(
-        (sum, pizza) => sum + pizza.price,
+        (sum, pizza) => sum + pizzaPrice(pizza) * pizza.quantity,
         0
       );
-      const miscPrice = state.misc.reduce((sum, m) => sum + m.price, 0);
+      const miscPrice = state.misc.reduce(
+        (sum, m) =>
+          sum +
+          getItemByIdOrDefault(useDataStore().misc, m.miscId).price *
+            m.quantity,
+        0
+      );
+      console.log(pizzasPrice + " " + miscPrice);
       return pizzasPrice + miscPrice;
     },
     getPhone: (state) => {
@@ -35,9 +65,11 @@ export const useCartStore = defineStore("cart", {
     },
   },
   actions: {
-    savePizza(pizza) {
+    savePizza(pizza, quantity) {
+      const q = quantity || 1;
       const { index, ...pizzaData } = pizza;
       const updatePizza = (i) => {
+        console.log(this.pizzas);
         this.pizzas[i] = {
           ...this.pizzas[i],
           ...pizzaData,
@@ -45,7 +77,8 @@ export const useCartStore = defineStore("cart", {
       };
       const addNewPizza = () => {
         this.pizzas.push({
-          quantity: 1,
+          quantity: q,
+          index: this.pizzas.length,
           ...pizzaData,
         });
       };
@@ -56,7 +89,16 @@ export const useCartStore = defineStore("cart", {
       }
     },
     setPizzaQuantity(index, count) {
-      if (this.pizzas[index]) {
+      const removePizzaItem = () => {
+        console.log(index);
+        this.pizzas.splice(index, 1);
+        this.pizzas.forEach((item, i) => {
+          item.index = i;
+        });
+      };
+      if (count === 0) {
+        removePizzaItem();
+      } else if (this.pizzas[index]) {
         this.pizzas[index].quantity = count;
       }
     },

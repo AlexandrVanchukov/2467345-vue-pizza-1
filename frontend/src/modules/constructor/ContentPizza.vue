@@ -6,24 +6,26 @@
         type="text"
         name="pizza_name"
         placeholder="Введите название пиццы"
+        :value="pizzaStore.name"
+        @input="nameUpdate($event.target.value)"
       />
     </label>
     <app-drop @drop="moveFilling">
       <div class="content__constructor">
         <div
           class="pizza"
-          :class="`pizza--foundation--${doughtConverter()}-${props.sauce}`"
+          :class="`pizza--foundation--${dough().name_eng}-${sauce().name_eng}`"
         >
           <div class="pizza__wrapper">
             <template
-              v-for="filling in Object.getOwnPropertyNames(props.fillings)"
+              v-for="filling in Object.getOwnPropertyNames(fillings())"
               :key="filling.id"
             >
               <div
                 class="pizza__filling"
                 :class="`pizza__filling--${
-                  props.fillings[filling] !== 0 ? filling : ''
-                } ${fillingAmountStyle(props.fillings[filling])}}`"
+                  fillings()[filling] !== 0 ? filling : ''
+                } ${fillingAmountStyle(fillings()[filling])}`"
               ></div>
             </template>
           </div>
@@ -32,40 +34,43 @@
     </app-drop>
 
     <div class="content__result">
-      <p>Итого: {{ props.price }} ₽</p>
-      <button type="button" class="button" disabled>Готовьте!</button>
+      <p>Итого: {{ pizzaStore.price }} ₽</p>
+      <router-link :to="{ name: 'cart' }">
+        <button type="button" class="button" @click="savePizza()">
+          Готовьте!
+        </button>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useDataStore } from "../../stores";
+import { usePizzaStore } from "../../stores";
+import { useCartStore } from "../../stores";
+import { transformIngredients } from "../../helpers";
+
+const dataStore = useDataStore();
+const pizzaStore = usePizzaStore();
+const cartStore = useCartStore();
+const sauce = () => {
+  const foundObject = dataStore.sauce.find((s) => s.id === pizzaStore.sauceId);
+  return foundObject;
+};
+
+const dough = () => {
+  const foundObject = dataStore.dough.find((d) => d.id === pizzaStore.doughId);
+  return foundObject;
+};
+
+const fillings = () => {
+  return transformIngredients(pizzaStore.ingredients, dataStore.ingredients);
+};
+
 import AppDrop from "../../common/components/AppDrop.vue";
 
-const props = defineProps({
-  dough: {
-    type: String,
-    required: true,
-  },
-  sauce: {
-    type: String,
-    required: true,
-  },
-  fillings: {
-    type: Object,
-    required: true,
-  },
-  moveFilling: {
-    type: Function,
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-});
-
-function doughtConverter() {
-  return props.dough === 1 ? "small" : "big";
+function moveFilling(filling_id) {
+  pizzaStore.incrementIngredientQuantity(filling_id);
 }
 
 function fillingAmountStyle(amount) {
@@ -77,6 +82,15 @@ function fillingAmountStyle(amount) {
     default:
       return "";
   }
+}
+
+function savePizza() {
+  cartStore.savePizza(pizzaStore.$state);
+  pizzaStore.setDefault();
+}
+
+function nameUpdate(newName) {
+  pizzaStore.setName(newName);
 }
 </script>
 
@@ -117,16 +131,16 @@ function fillingAmountStyle(amount) {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
-  &--foundation--big-creamy {
+  &--foundation--large-creamy {
     background-image: url("@/assets/img/foundation/big-creamy.svg");
   }
-  &--foundation--big-tomato {
+  &--foundation--large-tomato {
     background-image: url("@/assets/img/foundation/big-tomato.svg");
   }
-  &--foundation--small-creamy {
+  &--foundation--light-creamy {
     background-image: url("@/assets/img/foundation/small-creamy.svg");
   }
-  &--foundation--small-tomato {
+  &--foundation--light-tomato {
     background-image: url("@/assets/img/foundation/small-tomato.svg");
   }
 }

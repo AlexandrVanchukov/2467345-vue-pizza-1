@@ -7,15 +7,15 @@
         <template v-for="dough in doughs" :key="dough.id">
           <label
             class="dough__input"
-            :class="getDoughStyle(dough.name)"
-            @click="emit('setDough', translateNameToEng(dough.name))"
+            :class="getDoughStyle(dough.name_eng)"
+            @click="pizzaStore.setDough(dough.id)"
           >
             <input
               type="radio"
               name="dought"
-              :value="translateNameToEng(dough.name)"
+              :value="dough.name_eng"
               class="visually-hidden"
-              :checked="props.dough === translateNameToEng(dough.name)"
+              :checked="pizzaStore.doughId === dough.id"
             />
             <b>{{ dough.name }}</b>
             <span>{{ dough.description }}</span>
@@ -27,25 +27,16 @@
 </template>
 
 <script setup>
-import doughs from "../../mocks/dough.json";
-import { translateNameToEng } from "../../helpers/translate-name";
+import { usePizzaStore } from "../../stores";
+import { useDataStore } from "../../stores";
 
-const props = defineProps({
-  dough: {
-    type: String,
-    required: true,
-    default: "light",
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-});
+const pizzaStore = usePizzaStore();
+const dataStore = useDataStore();
 
-const emit = defineEmits(["setDough", "setPrice"]);
+const doughs = dataStore.dough;
 
-function getDoughStyle(dough_name) {
-  return `dough__input--${translateNameToEng(dough_name)}`;
+function getDoughStyle(dough_name_eng) {
+  return `dough__input--${dough_name_eng}`;
 }
 </script>
 
