@@ -15,16 +15,41 @@
         >{{ cartStore.totalCartPrice }} ₽</router-link
       >
     </div>
-    <div class="header__user">
+    <div v-if="useProfileStore().getName === ''" class="header__user">
       <router-link :to="{ name: 'login' }" class="header__login"
         ><span>Войти</span></router-link
       >
+    </div>
+    <div v-else class="header__user">
+      <router-link :to="{ name: 'profile' }">
+        <picture>
+          <source
+            type="image/webp"
+            :srcset="
+              useProfileStore().getAvatar +
+              '.webp 1x,' +
+              useProfileStore().getAvatar +
+              '@2x.webp 2x'
+            "
+          />
+          <img
+            :src="useProfileStore().getAvatar + '.jpg'"
+            :srcset="useProfileStore().getAvatar + '@2x.jpg'"
+            :alt="useProfileStore().getName"
+            width="32"
+            height="32"
+          />
+        </picture>
+        <span>{{ useProfileStore().getName }}</span>
+      </router-link>
+      <a href="#" class="header__logout"><span>Выйти</span></a>
     </div>
   </header>
 </template>
 
 <script setup>
 import { useCartStore } from "../stores/cart";
+import { useProfileStore } from "../stores";
 
 const cartStore = useCartStore();
 </script>

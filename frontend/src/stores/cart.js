@@ -43,7 +43,9 @@ export const useCartStore = defineStore("cart", {
       );
       const miscPrice = state.misc.reduce(
         (sum, m) =>
-          sum + getItemByIdOrDefault(useDataStore().misc, m.miscId).price,
+          sum +
+          getItemByIdOrDefault(useDataStore().misc, m.miscId).price *
+            m.quantity,
         0
       );
       console.log(pizzasPrice + " " + miscPrice);
