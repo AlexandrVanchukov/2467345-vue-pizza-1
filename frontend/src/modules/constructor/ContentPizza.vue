@@ -25,7 +25,7 @@
                 class="pizza__filling"
                 :class="`pizza__filling--${
                   fillings()[filling] !== 0 ? filling : ''
-                } ${fillingAmountStyle(fillings()[filling])}}`"
+                } ${fillingAmountStyle(fillings()[filling])}`"
               ></div>
             </template>
           </div>
