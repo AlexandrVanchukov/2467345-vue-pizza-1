@@ -33,19 +33,47 @@
       </div>
 
       <div class="footer__submit">
-        <button type="submit" class="button">Оформить заказ</button>
+        <button
+          type="button"
+          class="button"
+          :disabled="isSubmitting"
+          @click="handleSubmit"
+        >
+          {{ isSubmitting ? "Отправка..." : "Оформить заказ" }}
+        </button>
       </div>
+      <SuccessPopup v-if="isPopupVisible" />
     </section>
   </form>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { useCartStore } from "../stores";
 import CartList from "../modules/cart/CartList.vue";
 import CartAdditional from "../modules/cart/CartAdditional.vue";
 import CartForm from "../modules/cart/CartForm.vue";
+import SuccessPopup from "../modules/cart/SuccessPopup.vue";
 
 const cartStore = useCartStore();
+const isPopupVisible = ref(false);
+const isSubmitting = ref(false);
+
+const handleSubmit = async () => {
+  if (isSubmitting.value) return;
+
+  isSubmitting.value = true;
+
+  // Имитируем отправку данных
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // Замена реального запроса
+    isPopupVisible.value = true; // Показываем Popup
+  } catch (error) {
+    console.error("Ошибка при отправке заказа:", error);
+  } finally {
+    isSubmitting.value = false;
+  }
+};
 </script>
 
 <style lang="scss" scoped>
