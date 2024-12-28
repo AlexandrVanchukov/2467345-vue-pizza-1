@@ -1,5 +1,5 @@
 import { HttpClient } from "./HttpClient";
-import AxiosProvider from "./providers/AxiosProvider";
+import httpProvider from "./providers";
 const BASE_URL = "/api/ingredients";
 class IngredientService extends HttpClient {
   async fetch() {
@@ -11,6 +11,6 @@ class IngredientService extends HttpClient {
   }
 }
 export default new IngredientService({
-  httpProvider: new AxiosProvider(),
+  httpProvider,
   baseURL: BASE_URL,
 });

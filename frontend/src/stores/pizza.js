@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { useDataStore } from "./data";
 import { pizzaPrice, getItemByIdOrDefault } from "../helpers";
+import DoughService from "../services/DoughService";
 
 export const usePizzaStore = defineStore("pizza", {
   state: () => ({
@@ -40,6 +41,9 @@ export const usePizzaStore = defineStore("pizza", {
     price: (state) => pizzaPrice(state),
   },
   actions: {
+    async fetchDough() {
+      this.dough = await DoughService.fetch();
+    },
     setIndex(index) {
       this.index = index;
     },

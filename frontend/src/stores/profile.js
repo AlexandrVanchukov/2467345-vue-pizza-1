@@ -1,152 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { defineStore } from "pinia";
+import AuthService from "../services/AuthService";
+import { removeToken, setToken } from "../services/token-manager";
+import { getPublicImage } from "../common/helpers";
 
 export const useProfileStore = defineStore("profile", {
   state: () => ({
-    id: "1",
+    id: "",
     name: "",
-    email: "vanchukov.job@mail.ru",
+    email: "",
     avatar: "",
-    phone: "89024156728",
-    addresses: [
-      {
-        id: 1,
-        name: "Офис на невском",
-        street: "Невский пр.",
-        building: "42",
-        flat: "",
-        comment: "Код от домофона 2789",
-        userId: "1",
-      },
-      {
-        id: 2,
-        name: "Дом",
-        street: "Ул Рябикова",
-        building: "42",
-        flat: "12",
-        comment: "Код от домофона 2789",
-        userId: "1",
-      },
-    ],
-    orders: [
-      {
-        id: 0,
-        userId: "user123",
-        addressId: 1,
-        orderPizzas: [
-          {
-            id: 0,
-            name: "Margherita",
-            sauceId: 1,
-            doughId: 1,
-            sizeId: 2,
-            quantity: 2,
-            orderId: 0,
-            ingredients: [
-              {
-                id: 0,
-                pizzaId: 0,
-                ingredientId: 1,
-                quantity: 1,
-              },
-              {
-                id: 1,
-                pizzaId: 0,
-                ingredientId: 2,
-                quantity: 1,
-              },
-            ],
-          },
-        ],
-        orderMisc: [
-          {
-            id: 0,
-            orderId: 0,
-            miscId: 1,
-            quantity: 1,
-          },
-        ],
-        orderAddress: {
-          id: 1,
-          name: "Home",
-          street: "Main St",
-          building: "12A",
-          flat: "34",
-          comment: "Leave at the door",
-          userId: "user123",
-        },
-      },
-      {
-        id: 1,
-        userId: "user456",
-        addressId: 2,
-        orderPizzas: [
-          {
-            id: 1,
-            name: "Pepperoni",
-            sauceId: 2,
-            doughId: 2,
-            sizeId: 3,
-            quantity: 1,
-            orderId: 1,
-            ingredients: [
-              {
-                id: 2,
-                pizzaId: 1,
-                ingredientId: 3,
-                quantity: 2,
-              },
-              {
-                id: 3,
-                pizzaId: 1,
-                ingredientId: 4,
-                quantity: 1,
-              },
-            ],
-          },
-          {
-            id: 2,
-            name: "SUPERPepperoni",
-            sauceId: 2,
-            doughId: 2,
-            sizeId: 3,
-            quantity: 2,
-            orderId: 1,
-            ingredients: [
-              {
-                id: 4,
-                pizzaId: 2,
-                ingredientId: 3,
-                quantity: 2,
-              },
-              {
-                id: 5,
-                pizzaId: 2,
-                ingredientId: 4,
-                quantity: 1,
-              },
-            ],
-          },
-        ],
-        orderMisc: [
-          {
-            id: 1,
-            orderId: 1,
-            miscId: 2,
-            quantity: 2,
-          },
-        ],
-        orderAddress: {
-          id: 2,
-          name: "Office",
-          street: "Broadway",
-          building: "21",
-          flat: "5B",
-          comment: "Call on arrival",
-          userId: "user456",
-        },
-      },
-    ],
+    phone: "",
+    addresses: [],
+    orders: [],
   }),
   getters: {
     getOrders: (state) => {
@@ -160,7 +26,7 @@ export const useProfileStore = defineStore("profile", {
       return state.email;
     },
     getAvatar: (state) => {
-      return state.avatar;
+      return getPublicImage(state.avatar);
     },
     getPhone: (state) => {
       return state.phone;
@@ -168,17 +34,38 @@ export const useProfileStore = defineStore("profile", {
     getAddresses: (state) => {
       return state.addresses;
     },
+    isAuthenticated: (state) => Boolean(state.email),
   },
   actions: {
-    login(email, password) {},
-    logout() {
-      this.id = 0;
+    async login(email, password) {
+      try {
+        const data = await AuthService.login(email, password);
+        setToken(data.token);
+        return "ok";
+      } catch (e) {
+        return e.message;
+      }
+    },
+    async whoAmI() {
+      const userData = await AuthService.whoAmI();
+      this.id = userData.id;
+      this.name = userData.name;
+      this.email = userData.email;
+      this.avatar = userData.avatar;
+      this.phone = userData.phone;
+    },
+    async logout(sendRequest = true) {
+      await AuthService.logout();
+
+      this.id = "";
       this.name = "";
       this.email = "";
       this.avatar = "";
       this.phone = "";
       this.orders = [];
       this.addresses = [];
+
+      removeToken();
     },
     addOrder(order) {
       this.orders.push(order);

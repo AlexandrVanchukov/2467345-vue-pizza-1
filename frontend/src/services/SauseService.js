@@ -1,5 +1,5 @@
 import { HttpClient } from "./HttpClient";
-import AxiosProvider from "./providers/AxiosProvider";
+import httpProvider from "./providers";
 const BASE_URL = "/api/sauces";
 class SauceService extends HttpClient {
   async fetch() {
@@ -11,6 +11,6 @@ class SauceService extends HttpClient {
   }
 }
 export default new SauceService({
-  httpProvider: new AxiosProvider(),
+  httpProvider,
   baseURL: BASE_URL,
 });
