@@ -4,7 +4,7 @@ import { defineStore } from "pinia";
 export const useProfileStore = defineStore("profile", {
   state: () => ({
     id: "1",
-    name: "Ванчуков Александр",
+    name: "",
     email: "vanchukov.job@mail.ru",
     avatar: "",
     phone: "89024156728",
