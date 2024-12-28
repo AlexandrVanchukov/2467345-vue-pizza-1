@@ -42,7 +42,9 @@
         </picture>
         <span>{{ useProfileStore().getName }}</span>
       </router-link>
-      <a href="#" class="header__logout"><span>Выйти</span></a>
+      <router-link :to="{ name: 'home' }" class="header__logout">
+        <span @click="useProfileStore().logout()">Выйти</span>
+      </router-link>
     </div>
   </header>
 </template>

@@ -1,10 +1,22 @@
 import axios from "axios";
 export default class AxiosProvider {
+  interceptors = [];
+
   computeQueryParams(query) {
     if (!query) return "";
     const queryParams = new URLSearchParams(query);
     return "?" + queryParams.toString();
   }
+
+   addInterceptor(interceptor) {
+    if (interceptor && interceptor.onError) {
+      this.interceptors.push(interceptor);
+    } else {
+      throw Error("Interceptor не поддерживается");
+    }
+    return this;
+  }
+
   async request(options) {
     const url =
       options.baseUrl + options.path + this.computeQueryParams(options.query);
@@ -26,6 +38,11 @@ export default class AxiosProvider {
   async onError(error) {
     if (error.response) {
       const { data } = error.response;
+      this.interceptors.forEach((interceptor) => {
+        if (interceptor.onError) {
+          interceptor.onError(data.statusCode, data.error.message);
+        }
+      });
       throw new Error(data.error.message || "An error occurred");
     } else if (error.request) {
       throw new Error("No response received from the server");

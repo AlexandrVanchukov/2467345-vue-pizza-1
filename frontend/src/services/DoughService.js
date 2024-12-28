@@ -1,5 +1,5 @@
 import { HttpClient } from "./HttpClient";
-import AxiosProvider from "./providers/AxiosProvider";
+import httpProvider from "./providers";
 const BASE_URL = "/api/dough";
 class DoughService extends HttpClient {
   async fetch() {
@@ -11,6 +11,6 @@ class DoughService extends HttpClient {
   }
 }
 export default new DoughService({
-  httpProvider: new AxiosProvider(),
+  httpProvider,
   baseURL: BASE_URL,
 });

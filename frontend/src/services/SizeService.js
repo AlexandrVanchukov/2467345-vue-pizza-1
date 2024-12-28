@@ -1,5 +1,5 @@
 import { HttpClient } from "./HttpClient";
-import AxiosProvider from "./providers/AxiosProvider";
+import httpProvider from "./providers";
 const BASE_URL = "/api/sizes";
 class SizeService extends HttpClient {
   async fetch() {
@@ -11,6 +11,6 @@ class SizeService extends HttpClient {
   }
 }
 export default new SizeService({
-  httpProvider: new AxiosProvider(),
+  httpProvider,
   baseURL: BASE_URL,
 });

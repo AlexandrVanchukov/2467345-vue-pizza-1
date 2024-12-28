@@ -1,5 +1,6 @@
 import { HttpClient } from "./HttpClient";
 import httpProvider from "./providers";
+import { getToken } from "./token-manager";
 const BASE_URL = "/api/orders";
 class OrderService extends HttpClient {
   async fetch() {
@@ -9,14 +10,14 @@ class OrderService extends HttpClient {
       throw Error(e);
     }
   }
-  async createPost(post) {
+  async create(data) {
     try {
-      return this.post("/", { data: post });
+      return this.post("/", { data });
     } catch (e) {
       throw Error(e);
     }
   }
-  async deletePost(id) {
+  async deleteOrder(id) {
     try {
       await this.delete(`/${id}`);
     } catch (e) {
@@ -27,4 +28,5 @@ class OrderService extends HttpClient {
 export default new OrderService({
   httpProvider,
   baseURL: BASE_URL,
+  getToken,
 });

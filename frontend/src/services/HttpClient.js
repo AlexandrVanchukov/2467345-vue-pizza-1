@@ -4,11 +4,14 @@ export class HttpClient {
       throw Error("[HttpClient]: Base url is empty");
     }
     this.httpProvider = options.httpProvider;
+    this.getToken = options.getToken;
     this.baseUrl = options.baseURL;
   }
   buildRequest(options = {}) {
+    const token = this.getToken != null ? this.getToken() : null;
     let headers = {
       "Content-Type": "application/json",
+      Authorization: token ? `Bearer ${token}` : "",
     };
     if (options.headers) {
       headers = {

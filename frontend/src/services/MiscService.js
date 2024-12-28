@@ -1,5 +1,5 @@
 import { HttpClient } from "./HttpClient";
-import AxiosProvider from "./providers/AxiosProvider";
+import httpProvider from "./providers";
 const BASE_URL = "/api/misc";
 class MiscService extends HttpClient {
   async fetch() {
@@ -11,6 +11,6 @@ class MiscService extends HttpClient {
   }
 }
 export default new MiscService({
-  httpProvider: new AxiosProvider(),
+  httpProvider,
   baseURL: BASE_URL,
 });
