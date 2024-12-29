@@ -5,6 +5,7 @@ const BASE_URL = "/api/orders";
 class OrderService extends HttpClient {
   async fetch() {
     try {
+      console.log(this.get("/"));
       return this.get("/");
     } catch (e) {
       throw Error(e);

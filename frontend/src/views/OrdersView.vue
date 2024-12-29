@@ -38,7 +38,7 @@
         >
           <div class="product">
             <img
-              src="img/product.svg"
+              src="../assets/img/product.svg"
               class="product__img"
               :width="IMG_SIZE"
               :height="IMG_SIZE"
@@ -70,7 +70,11 @@
       <ul class="order__additional">
         <li v-for="additioal in order.orderMisc" :key="additioal.id">
           <img
-            :src="getItemByIdOrDefault(dataStore.misc, additioal.miscId).image"
+            :src="
+              getPublicImage(
+                getItemByIdOrDefault(dataStore.misc, additioal.miscId).image
+              ) + '.svg'
+            "
             width="20"
             height="30"
             :alt="getItemByIdOrDefault(dataStore.misc, additioal.miscId).name"
@@ -88,7 +92,7 @@
           </p>
         </li>
       </ul>
-      <p class="order__address">
+      <p v-if="order.orderAddress" class="order__address">
         Адрес доставки: {{ order.orderAddress.name }}
         {{ order.orderAddress.street }}, д. {{ order.orderAddress.building }}
         <span v-if="order.orderAddress.flat"
@@ -100,19 +104,28 @@
 </template>
 
 <script setup>
-import { useDataStore, useProfileStore, useCartStore } from "../stores";
+import { useRouter } from "vue-router";
+import {
+  useDataStore,
+  useProfileStore,
+  useCartStore,
+  usePizzaStore,
+} from "../stores";
 import { pizzaPrice, getItemByIdOrDefault, findNameById } from "../helpers";
 import { IMG_SIZE } from "../common/constants";
 import { idDoughToPhrase } from "../common/constants";
+import { getPublicImage } from "../common/helpers";
 
+const router = useRouter();
 const dataStore = useDataStore();
 const profileStore = useProfileStore();
 const cartStore = useCartStore();
+const pizzaStore = usePizzaStore();
 
 const repeatOrder = ({ orderPizzas, orderMisc, orderAddress }) => {
-  // console.log(orderPizzas);
-  // console.log(orderMisc);
-  // console.log(orderAddress);
+  cartStore.setDefaultState();
+  pizzaStore.setDefault();
+
   for (const pizza of orderPizzas) {
     console.log(pizza);
     cartStore.savePizza(
@@ -131,6 +144,8 @@ const repeatOrder = ({ orderPizzas, orderMisc, orderAddress }) => {
     cartStore.setMiscQuantity(misc.miscId, misc.quantity);
   }
   cartStore.setAddress(orderAddress);
+
+  router.push({ name: "cart" });
 };
 
 const totalOrderPrice = (order) => {
@@ -138,10 +153,15 @@ const totalOrderPrice = (order) => {
     (sum, pizza) => sum + pizzaPrice(pizza) * pizza.quantity,
     0
   );
-  const miscPrice = order.orderMisc.reduce(
-    (sum, m) => sum + getItemByIdOrDefault(useDataStore().misc, m.miscId).price,
-    0
-  );
+  let miscPrice = 0;
+  if (order.orderMisc) {
+    miscPrice = order.orderMisc.reduce(
+      (sum, m) =>
+        sum + getItemByIdOrDefault(useDataStore().misc, m.miscId).price,
+      0
+    );
+  }
+
   console.log(pizzasPrice + " " + miscPrice);
   return pizzasPrice + miscPrice;
 };
@@ -152,6 +172,9 @@ const getIngredientNames = (ingredients) => {
   );
   return ingredientsNames.join(", ").toLowerCase();
 };
+
+profileStore.fetchOrders();
+dataStore.fetchMisc();
 </script>
 
 <style lang="scss" scoped>

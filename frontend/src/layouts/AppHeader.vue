@@ -42,8 +42,12 @@
         </picture>
         <span>{{ useProfileStore().getName }}</span>
       </router-link>
-      <router-link :to="{ name: 'home' }" class="header__logout">
-        <span @click="useProfileStore().logout()">Выйти</span>
+      <router-link
+        :to="{ name: 'home' }"
+        class="header__logout"
+        @click="useProfileStore().logout()"
+      >
+        <span>Выйти</span>
       </router-link>
     </div>
   </header>
@@ -83,7 +87,7 @@ const cartStore = useCartStore();
     transition: 0.3s;
     color: $white;
     background-color: $green-500;
-    background-image: url("../img/cart.svg");
+    background-image: url("../assets/img/cart.svg");
     background-repeat: no-repeat;
     background-position: 20px center;
     background-size: 29px 27px;
@@ -142,7 +146,7 @@ const cartStore = useCartStore();
     margin-right: 8px;
     content: "";
     vertical-align: middle;
-    background: url(../img/login.svg) no-repeat center;
+    background: url(../assets/img/login.svg) no-repeat center;
     background-size: auto 50%;
   }
 }
@@ -154,7 +158,7 @@ const cartStore = useCartStore();
     margin-left: 8px;
     content: "";
     vertical-align: middle;
-    background: url(../img/login.svg) no-repeat center;
+    background: url(../assets/img/login.svg) no-repeat center;
     background-size: auto 50%;
   }
 }

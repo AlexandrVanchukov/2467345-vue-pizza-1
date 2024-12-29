@@ -1,8 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { defineStore } from "pinia";
 import AuthService from "../services/AuthService";
+import AddressService from "../services/AddressService";
+import OrderService from "../services/OrderService";
 import { removeToken, setToken } from "../services/token-manager";
 import { getPublicImage } from "../common/helpers";
+import { useCartStore } from "./cart";
+import { usePizzaStore } from "./pizza";
 
 export const useProfileStore = defineStore("profile", {
   state: () => ({
@@ -41,6 +45,7 @@ export const useProfileStore = defineStore("profile", {
       try {
         const data = await AuthService.login(email, password);
         setToken(data.token);
+        console.log(data.token);
         return "ok";
       } catch (e) {
         return e.message;
@@ -57,6 +62,9 @@ export const useProfileStore = defineStore("profile", {
     async logout(sendRequest = true) {
       await AuthService.logout();
 
+      // useCartStore().setDefaultState();
+      // usePizzaStore().setDefault();
+
       this.id = "";
       this.name = "";
       this.email = "";
@@ -67,29 +75,41 @@ export const useProfileStore = defineStore("profile", {
 
       removeToken();
     },
+    async fetchAddresses() {
+      this.addresses = await AddressService.fetch();
+    },
+    async fetchOrders() {
+      this.orders = await OrderService.fetch();
+    },
+    async deleteOrder(id) {
+      const indexInStore = this.orders.findIndex((order) => order.id == id);
+      this.orders.splice(indexInStore, 1);
+      await OrderService.deleteOrder(id);
+    },
     addOrder(order) {
       this.orders.push(order);
-    },
-    deleteOrder(id) {
-      console.log(id);
-      console.log(this.orders);
-      this.orders = this.orders.filter((order) => order.id !== id);
-      console.log(this.orders);
     },
     clearOrders() {
       this.orders = [];
     },
-    addAddress(address) {
-      this.addresses.push(address);
+    async addAddress(address) {
+      const res = await AddressService.create({
+        ...address,
+        userId: this.id,
+      });
+      if (res.id != undefined) {
+        this.addresses.push(res);
+      }
     },
-    deleteAddress(id) {
+    async deleteAddress(id) {
+      const res = await AddressService.deleteAddress(id);
       this.addresses = this.addresses.filter((address) => address.id !== id);
     },
-    editAddress(id, updatedAddress) {
-      const index = this.addresses.findIndex((address) => address.id === id);
-      if (index !== -1) {
-        this.addresses[index] = { ...this.addresses[index], ...updatedAddress };
-      }
+    async updateAddress(address) {
+      const res = await AddressService.update(address);
+      this.addresses = this.addresses.map((i) =>
+        i.id === address.id ? address : i
+      );
     },
   },
 });

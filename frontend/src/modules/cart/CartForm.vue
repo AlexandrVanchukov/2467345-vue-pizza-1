@@ -4,10 +4,16 @@
       <label class="cart-form__select">
         <span class="cart-form__label">Получение заказа:</span>
 
-        <select name="test" class="select">
-          <option value="1">Заберу сам</option>
-          <option value="2">Новый адрес</option>
-          <option value="3">Дом</option>
+        <select name="test" class="select" @change="handleSelectChange">
+          <option value="-1">Заберу сам</option>
+          <option value="0">Новый адрес</option>
+          <option
+            v-for="address in useProfileStore().getAddresses"
+            :key="address.id"
+            :value="address.id"
+          >
+            {{ address.id }}
+          </option>
         </select>
       </label>
       <!-- :value="pizzaStore.name"
@@ -24,56 +30,63 @@
           type="tel"
           name="tel"
           placeholder="+7 999-999-99-99"
-          :value="cartStore.phone"
+          :value="cartStore.getPhone"
           @input="inputUpdate(cartStore.setPhone, $event.target.value)"
         />
       </label>
+      <template v-if="!isTakeOut">
+        <div class="cart-form__address">
+          <span class="cart-form__label">Новый адрес:</span>
 
-      <div class="cart-form__address">
-        <span class="cart-form__label">Новый адрес:</span>
+          <div class="cart-form__input">
+            <label class="input">
+              <span>Улица*</span>
+              <input
+                type="text"
+                name="street"
+                :value="cartStore.getAddress.street"
+                :readonly="isReadOnlyAddress"
+                @input="inputUpdate(cartStore.setStreet, $event.target.value)"
+              />
+            </label>
+          </div>
 
-        <div class="cart-form__input">
-          <label class="input">
-            <span>Улица*</span>
-            <input
-              type="text"
-              name="street"
-              :value="cartStore.getAddress.street"
-              @input="inputUpdate(cartStore.setStreet, $event.target.value)"
-            />
-          </label>
+          <div class="cart-form__input cart-form__input--small">
+            <label class="input">
+              <span>Дом*</span>
+              <input
+                type="text"
+                name="house"
+                :value="cartStore.getAddress.building"
+                :readonly="isReadOnlyAddress"
+                @input="inputUpdate(cartStore.setBuilding, $event.target.value)"
+              />
+            </label>
+          </div>
+
+          <div class="cart-form__input cart-form__input--small">
+            <label class="input">
+              <span>Квартира</span>
+              <input
+                type="number"
+                name="apartment"
+                :value="cartStore.getAddress.flat"
+                :readonly="isReadOnlyAddress"
+                @input="inputUpdate(cartStore.setFlat, $event.target.value)"
+              />
+            </label>
+          </div>
         </div>
-
-        <div class="cart-form__input cart-form__input--small">
-          <label class="input">
-            <span>Дом*</span>
-            <input
-              type="text"
-              name="house"
-              :value="cartStore.getAddress.building"
-              @input="inputUpdate(cartStore.setBuilding, $event.target.value)"
-            />
-          </label>
-        </div>
-
-        <div class="cart-form__input cart-form__input--small">
-          <label class="input">
-            <span>Квартира</span>
-            <input
-              type="number"
-              name="apartment"
-              :value="cartStore.getAddress.flat"
-              @input="inputUpdate(cartStore.setFlat, $event.target.value)"
-            />
-          </label>
-        </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useCartStore } from "../../stores";
+import { useCartStore, useProfileStore } from "../../stores";
+import { ref } from "vue";
+const isTakeOut = ref(true);
+const isReadOnlyAddress = ref(false);
 
 const cartStore = useCartStore();
 
@@ -81,6 +94,37 @@ function inputUpdate(setFunction, newValue) {
   setFunction(newValue);
   console.log(cartStore.getAddress);
 }
+const findAddressById = (id) => {
+  return useProfileStore().getAddresses.find((i) => i.id == id);
+};
+
+const handleSelectChange = (event) => {
+  console.log(event.target.value);
+  const selectedValue = event.target.value;
+  cartStore.setReceivingOrderType(selectedValue);
+  if (selectedValue > 0) {
+    const currentAddress = findAddressById(selectedValue);
+    isTakeOut.value = false;
+    isReadOnlyAddress.value = true;
+
+    cartStore.setPhone(useProfileStore().getPhone);
+    cartStore.setStreet(currentAddress.street);
+    cartStore.setBuilding(currentAddress.building);
+    cartStore.setFlat(currentAddress.flat);
+  } else if (selectedValue == 0) {
+    isTakeOut.value = false;
+    isReadOnlyAddress.value = false;
+    cartStore.setStreet("");
+    cartStore.setBuilding("");
+    cartStore.setFlat("");
+  } else {
+    isTakeOut.value = true;
+    isReadOnlyAddress.value = false;
+    cartStore.setStreet("");
+    cartStore.setBuilding("");
+    cartStore.setFlat("");
+  }
+};
 </script>
 
 <style lang="scss" scoped>

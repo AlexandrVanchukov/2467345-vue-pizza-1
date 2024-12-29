@@ -7,7 +7,7 @@
     >
       <div class="product cart-list__product">
         <img
-          :src="item.imgSrc"
+          src="../../assets/img/product.svg"
           class="product__img"
           :width="IMG_SIZE"
           :height="IMG_SIZE"
