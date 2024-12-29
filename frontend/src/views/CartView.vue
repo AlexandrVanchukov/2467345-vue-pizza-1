@@ -54,8 +54,10 @@ import CartList from "../modules/cart/CartList.vue";
 import CartAdditional from "../modules/cart/CartAdditional.vue";
 import CartForm from "../modules/cart/CartForm.vue";
 import SuccessPopup from "../modules/cart/SuccessPopup.vue";
+import { useDataStore } from '../stores';
 
 const cartStore = useCartStore();
+const dataStore = useDataStore();
 const isPopupVisible = ref(false);
 const isSubmitting = ref(false);
 
@@ -74,6 +76,8 @@ const handleSubmit = async () => {
     isSubmitting.value = false;
   }
 };
+
+dataStore.fetchMisc();
 </script>
 
 <style lang="scss" scoped>

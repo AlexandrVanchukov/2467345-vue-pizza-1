@@ -2,12 +2,17 @@
   <div class="cart__additional">
     <ul class="additional-list">
       <li
-        v-for="item in dataStore.misc"
+        v-for="item in useDataStore().misc"
         :key="item.id"
         class="additional-list__item sheet"
       >
         <p class="additional-list__description">
-          <img :src="item.image" width="39" height="60" :alt="item.name" />
+          <img
+            :src="getPublicImage(item.image) + '.svg'"
+            width="39"
+            height="60"
+            :alt="item.name"
+          />
           <span>{{ item.name }}</span>
         </p>
         <div class="additional-list__wrapper">
@@ -32,6 +37,7 @@
 
 <script setup>
 import { computed } from "vue";
+import { getPublicImage } from "../../common/helpers";
 import AppCounter from "@/common/components/AppCounter.vue";
 import { useCartStore } from "../../stores";
 import { useDataStore } from "../../stores";

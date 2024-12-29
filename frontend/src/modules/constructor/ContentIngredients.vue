@@ -10,7 +10,7 @@
           <p>Начинка:</p>
           <ul class="ingredients__list">
             <li
-              v-for="ingredient in ingredientsData"
+              v-for="ingredient in useDataStore().ingredients"
               :key="ingredient.id"
               class="ingredients__item"
             >
@@ -51,14 +51,16 @@ import { reverseTransformIngredients } from "../../helpers";
 import { useDataStore } from "../../stores";
 import { usePizzaStore } from "../../stores";
 
-const dataStore = useDataStore();
 const pizzaStore = usePizzaStore();
 
-const ingredientsData = dataStore.ingredients;
+console.log(useDataStore().ingredients);
 
 const fillings = computed({
   get() {
-    return transformIngredients(pizzaStore.ingredients, ingredientsData);
+    return transformIngredients(
+      pizzaStore.ingredients,
+      useDataStore().ingredients
+    );
   },
 });
 
@@ -66,7 +68,7 @@ const handleUpdate = (ingredientName, newValue) => {
   const newIngredients = { ...fillings, [ingredientName]: newValue };
   const result = reverseTransformIngredients(
     newIngredients._value,
-    ingredientsData
+    useDataStore().ingredients
   );
   pizzaStore.setIngredients(result);
 };

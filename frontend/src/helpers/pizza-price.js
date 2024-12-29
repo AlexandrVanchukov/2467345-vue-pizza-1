@@ -3,6 +3,13 @@ import { useDataStore } from "../stores/data";
 // const dataStore = useDataStore();
 
 export const pizzaPrice = (state) => {
+  if (
+    useDataStore().dough.length === 0 ||
+    useDataStore().ingredients.length === 0 ||
+    useDataStore().sauce.length === 0
+  ) {
+    return 0;
+  }
   var result = 0;
   result += useDataStore().dough.find((d) => d.id == state.doughId).price;
 

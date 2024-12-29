@@ -14,7 +14,9 @@
       <div class="content__constructor">
         <div
           class="pizza"
-          :class="`pizza--foundation--${dough().name_eng}-${sauce().name_eng}`"
+          :class="`pizza--foundation--${dough()?.name_eng}-${
+            sauce()?.name_eng
+          }`"
         >
           <div class="pizza__wrapper">
             <template

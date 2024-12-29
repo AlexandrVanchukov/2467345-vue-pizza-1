@@ -12,28 +12,8 @@ export const useCartStore = defineStore("cart", {
       flat: "",
       comment: "",
     },
-    pizzas: [
-      {
-        index: 0,
-        name: "test_pizza",
-        sauceId: 1,
-        doughId: 1,
-        sizeId: 1,
-        quantity: 1,
-        ingredients: [
-          {
-            ingredientId: 1,
-            quantity: 3,
-          },
-        ],
-      },
-    ],
-    misc: [
-      {
-        miscId: 1,
-        quantity: 1,
-      },
-    ],
+    pizzas: [],
+    misc: [],
   }),
   getters: {
     totalCartPrice: (state) => {
