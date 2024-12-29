@@ -69,8 +69,6 @@ const cartStore = useCartStore();
 const dataStore = useDataStore();
 const pizzaStore = usePizzaStore();
 
-console.log(cartStore.pizzas);
-
 const getIngredientNames = (ingredients) => {
   const ingredientsNames = ingredients.map((i) =>
     findNameById(dataStore.ingredients, i.ingredientId)

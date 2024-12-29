@@ -23,7 +23,6 @@ export const useProfileStore = defineStore("profile", {
       return state.orders;
     },
     getName: (state) => {
-      console.log(state.name);
       return state.name;
     },
     getEmail: (state) => {
@@ -45,7 +44,6 @@ export const useProfileStore = defineStore("profile", {
       try {
         const data = await AuthService.login(email, password);
         setToken(data.token);
-        console.log(data.token);
         return "ok";
       } catch (e) {
         return e.message;

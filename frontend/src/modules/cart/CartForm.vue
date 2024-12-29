@@ -92,14 +92,12 @@ const cartStore = useCartStore();
 
 function inputUpdate(setFunction, newValue) {
   setFunction(newValue);
-  console.log(cartStore.getAddress);
 }
 const findAddressById = (id) => {
   return useProfileStore().getAddresses.find((i) => i.id == id);
 };
 
 const handleSelectChange = (event) => {
-  console.log(event.target.value);
   const selectedValue = event.target.value;
   cartStore.setReceivingOrderType(selectedValue);
   if (selectedValue > 0) {

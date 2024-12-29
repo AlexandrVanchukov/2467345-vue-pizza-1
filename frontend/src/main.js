@@ -21,6 +21,5 @@ if (token) {
     await router.push({ name: "home" });
   } catch (e) {
     removeToken();
-    console.log(e);
   }
 }

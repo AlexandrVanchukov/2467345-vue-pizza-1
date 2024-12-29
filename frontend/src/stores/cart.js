@@ -31,7 +31,6 @@ export const useCartStore = defineStore("cart", {
             m.quantity,
         0
       );
-      console.log(pizzasPrice + " " + miscPrice);
       return pizzasPrice + miscPrice;
     },
     getPhone: (state) => {
@@ -73,7 +72,6 @@ export const useCartStore = defineStore("cart", {
       const q = quantity || 1;
       const { index, ...pizzaData } = pizza;
       const updatePizza = (i) => {
-        console.log(this.pizzas);
         this.pizzas[i] = {
           ...this.pizzas[i],
           ...pizzaData,
@@ -94,7 +92,6 @@ export const useCartStore = defineStore("cart", {
     },
     setPizzaQuantity(index, count) {
       const removePizzaItem = () => {
-        console.log(index);
         this.pizzas.splice(index, 1);
         this.pizzas.forEach((item, i) => {
           item.index = i;

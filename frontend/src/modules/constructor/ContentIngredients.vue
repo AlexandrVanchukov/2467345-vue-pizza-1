@@ -53,7 +53,6 @@ import { usePizzaStore } from "../../stores";
 
 const pizzaStore = usePizzaStore();
 
-console.log(useDataStore().ingredients);
 
 const fillings = computed({
   get() {

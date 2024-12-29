@@ -127,7 +127,6 @@ const repeatOrder = ({ orderPizzas, orderMisc, orderAddress }) => {
   pizzaStore.setDefault();
 
   for (const pizza of orderPizzas) {
-    console.log(pizza);
     cartStore.savePizza(
       {
         index: null,
@@ -162,7 +161,6 @@ const totalOrderPrice = (order) => {
     );
   }
 
-  console.log(pizzasPrice + " " + miscPrice);
   return pizzasPrice + miscPrice;
 };
 
