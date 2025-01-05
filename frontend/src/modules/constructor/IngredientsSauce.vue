@@ -1,7 +1,7 @@
 <template>
   <div class="ingredients__sauce">
     <p>Основной соус:</p>
-    <template v-for="sauce in sauceData" :key="sauce.id">
+    <template v-for="sauce in useDataStore().sauce" :key="sauce.id">
       <label
         class="radio ingredients__input"
         @click="pizzaStore.setSauce(sauce.id)"
@@ -22,10 +22,7 @@
 import { useDataStore } from "../../stores";
 import { usePizzaStore } from "../../stores";
 
-const dataStore = useDataStore();
 const pizzaStore = usePizzaStore();
-
-const sauceData = dataStore.sauce;
 </script>
 
 <style lang="scss" scoped>

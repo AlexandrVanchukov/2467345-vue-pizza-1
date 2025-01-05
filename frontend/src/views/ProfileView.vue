@@ -100,7 +100,7 @@
             <button
               type="button"
               class="button button--transparent"
-              @click="deleteAddress(address.id)"
+              @click="deleteAddress(editingAddress.id)"
             >
               Удалить
             </button>
@@ -194,7 +194,7 @@
           <button
             type="button"
             class="button button--transparent"
-            @click="cancelEdit"
+            @click="cancelAddAddress"
           >
             Отменить
           </button>
@@ -228,12 +228,12 @@ const editingAddress = ref(null);
 
 const addingNewAddress = ref(false);
 const newAddress = ref({
-  id: null,
   name: "",
   street: "",
   building: "",
   flat: "",
   comment: "",
+  userId: profileStore.id,
 });
 
 // Методы
@@ -243,8 +243,6 @@ function editAddress(address) {
 }
 
 function cancelEdit() {
-  console.log(editingAddress.value);
-  console.log(editingAddressId.value);
   editingAddressId.value = null;
   editingAddress.value = null;
 }
@@ -255,20 +253,19 @@ function deleteAddress(addressId) {
 }
 
 function saveEdit() {
-  profileStore.editAddress(editingAddressId.value, editingAddress.value);
-  console.log(profileStore.getAddresses);
+  profileStore.updateAddress(editingAddress.value);
   cancelEdit();
 }
 
 function openAddAddressForm() {
   addingNewAddress.value = true;
   newAddress.value = {
-    id: Date.now(),
     name: "",
     street: "",
     building: "",
     flat: "",
     comment: "",
+    userId: profileStore.id,
   };
 }
 
@@ -281,6 +278,8 @@ function saveNewAddress() {
   profileStore.addAddress(newAddress.value);
   cancelAddAddress();
 }
+
+profileStore.fetchAddresses();
 </script>
 
 <style lang="scss" scoped>

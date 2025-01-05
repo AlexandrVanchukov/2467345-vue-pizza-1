@@ -14,7 +14,9 @@
       <div class="content__constructor">
         <div
           class="pizza"
-          :class="`pizza--foundation--${dough().name_eng}-${sauce().name_eng}`"
+          :class="`pizza--foundation--${dough()?.name_eng}-${
+            sauce()?.name_eng
+          }`"
         >
           <div class="pizza__wrapper">
             <template
@@ -36,7 +38,14 @@
     <div class="content__result">
       <p>Итого: {{ pizzaStore.price }} ₽</p>
       <router-link :to="{ name: 'cart' }">
-        <button type="button" class="button" @click="savePizza()">
+        <button
+          type="button"
+          class="button"
+          :disabled="
+            pizzaStore.name === '' || pizzaStore.ingredients.length === 0
+          "
+          @click="savePizza()"
+        >
           Готовьте!
         </button>
       </router-link>

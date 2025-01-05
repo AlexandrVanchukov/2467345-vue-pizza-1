@@ -7,7 +7,7 @@
     >
       <div class="product cart-list__product">
         <img
-          :src="item.imgSrc"
+          src="../../assets/img/product.svg"
           class="product__img"
           :width="IMG_SIZE"
           :height="IMG_SIZE"
@@ -68,8 +68,6 @@ import { IMG_SIZE } from "../../common/constants";
 const cartStore = useCartStore();
 const dataStore = useDataStore();
 const pizzaStore = usePizzaStore();
-
-console.log(cartStore.pizzas);
 
 const getIngredientNames = (ingredients) => {
   const ingredientsNames = ingredients.map((i) =>

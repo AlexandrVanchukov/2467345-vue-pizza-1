@@ -2,7 +2,9 @@
   <div class="popup-overlay" @click="handleOverlayClick">
     <AppPopup>
       <router-link
-        :to="{ name: isUserLoggedIn() ? 'orders' : 'home' }"
+        :to="
+          useProfileStore().isAuthenticated ? { name: 'orders' } : { name: 'home' }
+        "
         class="close"
       >
         <span class="visually-hidden">Закрыть попап</span>
@@ -11,7 +13,9 @@
       <p>Мы начали готовить Ваш заказ, скоро привезём его вам ;)</p>
       <AppPopupButton>
         <router-link
-          :to="{ name: isUserLoggedIn() ? 'orders' : 'home' }"
+          :to="
+            useProfileStore().isAuthenticated ? { name: 'orders' } : { name: 'home' }
+          "
           class="button"
         >
           Отлично, я жду!
@@ -26,14 +30,12 @@ import { useProfileStore } from "../../stores";
 import AppPopup from "@/common/components/popup/AppPopup.vue";
 import AppPopupTitle from "@/common/components/popup/AppPopupTitle.vue";
 import AppPopupButton from "@/common/components/popup/AppPopupButton.vue";
-const isUserLoggedIn = () => {
-  return useProfileStore().getName !== "";
-};
+
 
 const router = useRouter();
 
 const handleOverlayClick = () => {
-  router.push({ name: isUserLoggedIn() ? "orders" : "home" });
+  router.push({ name: useProfileStore().isAuthenticated ? "orders" : "home" });
 };
 </script>
 <style scoped>

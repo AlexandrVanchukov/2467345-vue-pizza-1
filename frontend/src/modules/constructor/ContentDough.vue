@@ -4,7 +4,7 @@
       <h2 class="title title--small sheet__title">Выберите тесто</h2>
 
       <div class="sheet__content dough">
-        <template v-for="dough in doughs" :key="dough.id">
+        <template v-for="dough in useDataStore().dough" :key="dough.id">
           <label
             class="dough__input"
             :class="getDoughStyle(dough.name_eng)"
@@ -27,13 +27,9 @@
 </template>
 
 <script setup>
-import { usePizzaStore } from "../../stores";
-import { useDataStore } from "../../stores";
+import { useDataStore, usePizzaStore } from "../../stores";
 
 const pizzaStore = usePizzaStore();
-const dataStore = useDataStore();
-
-const doughs = dataStore.dough;
 
 function getDoughStyle(dough_name_eng) {
   return `dough__input--${dough_name_eng}`;

@@ -34,9 +34,6 @@
         </label>
       </div>
       <button type="submit" class="button">Авторизоваться</button>
-      <!-- <router-link :to="{ name: 'home' }">
-        
-      </router-link> -->
       <div v-if="serverErrorMessage" class="server-error-message">
         {{ serverErrorMessage }}
       </div>
@@ -94,7 +91,7 @@ async function login() {
     // Получаем данные пользователя
     await profileStore.whoAmI();
     // Если логин без ошибок, перенаправляем на главную страницу
-    await router.push("/");
+    await router.push({ name: "home" });
   }
 }
 </script>

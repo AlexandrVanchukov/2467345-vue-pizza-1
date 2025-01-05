@@ -35,4 +35,8 @@ export default [
       },
     ],
   },
+  {
+    path: "/:pathMatch(.*)*",
+    redirect: { name: "home" },
+  },
 ];

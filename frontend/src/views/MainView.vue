@@ -21,6 +21,13 @@ import ContentDough from "../modules/constructor/ContentDough.vue";
 import ContentDiameter from "../modules/constructor/ContentDiameter.vue";
 import ContentIngredients from "../modules/constructor/ContentIngredients.vue";
 import ContentPizza from "../modules/constructor/ContentPizza.vue";
+import { useDataStore } from "../stores";
+const dataStore = useDataStore();
+
+dataStore.fetchDough();
+dataStore.fetchIngredients();
+dataStore.fetchSauces();
+dataStore.fetchSizes();
 </script>
 
 <style lang="scss" scoped>
