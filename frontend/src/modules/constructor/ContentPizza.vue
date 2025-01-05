@@ -41,7 +41,9 @@
         <button
           type="button"
           class="button"
-          :disabled="pizzaStore.name === ''"
+          :disabled="
+            pizzaStore.name === '' || pizzaStore.ingredients.length === 0
+          "
           @click="savePizza()"
         >
           Готовьте!
